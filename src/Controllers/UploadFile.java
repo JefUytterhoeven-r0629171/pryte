@@ -24,6 +24,14 @@ public class UploadFile extends RequestHandler {
         System.out.println(FILE_TO);
 
         try {
+
+            File directory = new File(FILE_TO);
+            if (! directory.exists()){
+                directory.mkdirs();
+                // If you require it to make the entire directory path including parents,
+                // use directory.mkdirs(); here instead.
+            }
+
             System.out.println("enter try block RunFIle Runfile" + naam);
             filePart = request.getPart("file");
             FILE_TO = FILE_TO + "\\" + filePart.getName() + filePart.getSubmittedFileName();
@@ -51,7 +59,7 @@ public class UploadFile extends RequestHandler {
         } catch (ServletException e) {
             e.printStackTrace();
         }
-        
+
         return "index.jsp";
     }
 
