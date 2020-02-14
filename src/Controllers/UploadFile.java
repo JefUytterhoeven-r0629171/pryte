@@ -1,5 +1,6 @@
 package Controllers;
 
+import domain.RunPythonScript;
 import sun.misc.IOUtils;
 
 import javax.servlet.ServletException;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import javax.swing.filechooser.FileSystemView;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 
 @MultipartConfig(maxFileSize = 16177215)
@@ -49,6 +51,7 @@ public class UploadFile extends RequestHandler {
         } catch (ServletException e) {
             e.printStackTrace();
         }
+        
         return "index.jsp";
     }
 
@@ -71,4 +74,5 @@ public class UploadFile extends RequestHandler {
         }
 
     }
+
 }
