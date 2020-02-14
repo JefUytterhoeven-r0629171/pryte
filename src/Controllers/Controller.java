@@ -4,6 +4,7 @@ import service.Service;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+@MultipartConfig(maxFileSize = 16177215)
 @WebServlet("/Controller")
 public class Controller extends javax.servlet.http.HttpServlet {
     private Service model = new Service();

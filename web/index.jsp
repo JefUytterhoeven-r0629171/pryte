@@ -12,5 +12,13 @@
   </head>
   <body>
   <<a href="Controller?action=Test">please pleas click me</a>
+
+  <form id="addoefenmatriaalform" enctype="multipart/form-data" name="addoefenmatriaalform" method="POST" action="Controller?action=RunFile">
+  <td><label for="file">first file you wanna run :  </label></td>
+  <td><input type="file" name="file"/> </td>
+    <td><input type="text" name="naam"/> </td>
+
+    <td><input class="button" type="submit" name="Submit" value="voeg toe" /></td>
+  </form>
   </body>
 </html>
