@@ -1,4 +1,4 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri='http://java.sun.com/jsp/jstl/core' %>
 <%--
   Created by IntelliJ IDEA.
   User: jefuy
@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/style.css">
     <script type="text/javascript" src="js/scriptVariables.js"></script>
+    <script type="text/javascript" src="js/scriptQueue.js"></script>
   </head>
   <body>
     <div class="split left">
@@ -50,6 +51,15 @@
       </form>
     </div>
     <div class="split right">
+      <div id="queue">
+        <h3>Queue</h3>
+        <ol id="list" type="1">
+
+        </ol>
+        <button type="button" onclick="runQueue()"> Run queue</button>
+      </div>
+
+      <h3>Overview</h3>
       <table class="table">
         <tr>
           <th>Naam</th>
@@ -65,20 +75,20 @@
             <td>${script.extension}</td>
           </tr>
         </c:forEach>--%>
-        <tr>
+        <tr id="script1">
           <td>script1</td>
           <td>.py</td>
           <td></td>
           <td></td>
-          <td><button type="button" onclick="addToQueue()">Add to queue</button></td>
+          <td><button type="button" onclick="addToQueue('script1')">Add to queue</button></td>
           <td><button type="button" onclick="deleteScript()"> X </button></td>
         </tr>
-        <tr>
+        <tr id="script2">
           <td>script2</td>
           <td>.r</td>
           <td></td>
           <td></td>
-          <td><button type="button" onclick="addToQueue()">Add to queue</button></td>
+          <td><button type="button" onclick="addToQueue('script2')">Add to queue</button></td>
           <td><button type="button" onclick="deleteScript()"> X </button></td>
         </tr>
 
