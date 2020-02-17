@@ -18,7 +18,7 @@
 
   <form id="addScriptForm" enctype="multipart/form-data" name="addoefenmatriaalform" method="POST" action="Controller?action=UploadFile">
     <label for="file">Upload script</label>
-    <input type="file" id="file"/>
+    <input type="file" id="file" />
 
     <label for="fileNaam">File naam</label>
     <input type="text" id="fileNaam"/>

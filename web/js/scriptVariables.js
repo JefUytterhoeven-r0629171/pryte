@@ -6,8 +6,9 @@ function addInputVariable() {
     tellerInput++;
 }
 function addOutputVariable() {
+    var teller = tellerOutput -1;
     var outputDiv = document.getElementById('outputDiv');
-    outputDiv.innerHTML += '<div id="'+ tellerOutput +'"><label for="output' + tellerOutput + '">Type output variable ' + tellerOutput + '</label>: <input type="text" name="output" id="' + tellerOutput + '"/><br><button type="button" onclick="deleteOutputVar(tellerOutput)">- output var</button></div>';
+    outputDiv.innerHTML += '<div id="'+ tellerOutput +'"><label for="output' + tellerOutput + '">Type output variable ' + tellerOutput + '</label>: <input type="text" name="output" id="' + tellerOutput + '"/><br><button type="button" onclick="deleteOutputVar(teller)">- output var</button></div>';
     tellerOutput++;
 }
 
