@@ -10,64 +10,80 @@
 <html>
   <head>
     <title>$Title$</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/style.css">
     <script type="text/javascript" src="js/scriptVariables.js"></script>
   </head>
   <body>
-
-  <form id="addScriptForm" enctype="multipart/form-data" method="POST" action="Controller?action=UploadFile">
-    <label for="file">Upload script</label>
-    <input type="file" id="file" name="file"/>
-
-    <label for="fileNaam">File naam</label>
-    <input type="text" id="fileNaam"/>
-
-    <div id="inputDiv">
-      <label for="input1">Type input variable 1</label>:
-      <input type="text" name="input" id="input1"><br>
+    <div class="split left">
+      <h3>Upload script</h3>
+      <form id="addScriptForm" enctype="multipart/form-data" method="POST" action="Controller?action=UploadFile">
+        <div class="form-group">
+          <input class="form-control-file" type="file" id="file" name="file"/>
+        </div>
+        <div class="form-group">
+          <label for="fileNaam">File naam</label>
+          <input class="form-control" type="text" id="fileNaam"/>
+        </div>
+        <hr/>
+        <div id="inputDiv">
+          <div class="form-group">
+            <label for="input1">Input variable 1</label>
+            <input class="form-control" type="text" name="input" id="input1" placeholder="Type">
+          </div>
+        </div>
+        <button type="button" onclick="addInputVariable()">+ input var</button>
+        <button type="button" onclick="deleteInputVar()">- input var</button>
+        <hr/>
+        <div id="outputDiv">
+          <div class="form-group">
+            <label for="input1">Output variable 1</label>
+            <input class="form-control" type="text" name="output" id="output1" placeholder="Type">
+          </div>
+        </div>
+        <button type="button" onclick="addOutputVariable()">+ output var</button>
+        <button type="button" onclick="deleteOutputVar()">- output var</button>
+        <hr/>
+        <br><br>
+        <input type="submit" name="Submit" value="voeg toe" />
+      </form>
     </div>
-    <button type="button" onclick="addInputVariable()">+ input var</button>
+    <div class="split right">
+      <table class="table">
+        <tr>
+          <th>Naam</th>
+          <th>Extensie</th>
+          <th>Input types</th>
+          <th>Output types</th>
+          <th>Add to queue</th>
+          <th>Delete</th>
+        </tr>
+        <%--<c:forEach var = "script" items="scripts">
+          <tr>
+            <td>${script.naam}</td>
+            <td>${script.extension}</td>
+          </tr>
+        </c:forEach>--%>
+        <tr>
+          <td>script1</td>
+          <td>.py</td>
+          <td></td>
+          <td></td>
+          <td><button type="button" onclick="addToQueue()">Add to queue</button></td>
+          <td><button type="button" onclick="deleteScript()"> X </button></td>
+        </tr>
+        <tr>
+          <td>script2</td>
+          <td>.r</td>
+          <td></td>
+          <td></td>
+          <td><button type="button" onclick="addToQueue()">Add to queue</button></td>
+          <td><button type="button" onclick="deleteScript()"> X </button></td>
+        </tr>
 
-    <div id="outputDiv">
-      <label for="input1">Type output variable 1</label>:
-      <input type="text" name="output" id="output1"><br>
+      </table>
     </div>
 
-    <button type="button" onclick="addOutputVariable()">+ output var</button>
-    <input class="button" type="submit" name="Submit" value="voeg toe" />
-  </form>
-  <table>
-    <tr>
-      <th>Naam</th>
-      <th>Extensie</th>
-      <th>Input types</th>
-      <th>Output types</th>
-      <th>Add to queue</th>
-      <th>Delete</th>
-    </tr>
-    <%--<c:forEach var = "script" items="scripts">
-      <tr>
-        <td>${script.naam}</td>
-        <td>${script.extension}</td>
-      </tr>
-    </c:forEach>--%>
-    <tr>
-      <td>script1</td>
-      <td>.py</td>
-      <td></td>
-      <td></td>
-      <td><button type="button" onclick="addToQueue()">Add to queue</button></td>
-      <td><button type="button" onclick="deleteScript()"> X </button></td>
-    </tr>
-    <tr>
-      <td>script2</td>
-      <td>.r</td>
-      <td></td>
-      <td></td>
-      <td><button type="button" onclick="addToQueue()">Add to queue</button></td>
-      <td><button type="button" onclick="deleteScript()"> X </button></td>
-    </tr>
-
-  </table>
   </body>
 </html>

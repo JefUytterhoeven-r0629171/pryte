@@ -1,34 +1,44 @@
-let tellerInput = 2;
-let tellerOutput = 2;
+let tellerInput = 1;
+let tellerOutput = 1;
+
 function addInputVariable() {
+    tellerInput++
     var inputDiv = document.getElementById('inputDiv');
     var variableDiv = document.createElement('div');
-    var currentTeller = tellerInput;
+    variableDiv.setAttribute('class', 'form-group')
     variableDiv.setAttribute('id', 'input'+tellerInput)
     variableDiv.innerHTML +=
-        '<label for="input' + tellerInput +'">Type input variable '+ tellerInput +'</label>: ' +
-        '<input type="text" name="input" id="input' + tellerInput + '"/><br>' +
-        '<button type="button" onclick="deleteInputVar(currentTeller)">- input var</button><br>';
+        '<label for="input' + tellerInput +'">Input variable '+ tellerInput +'</label>: ' +
+        '<input class="form-control" type="text" name="input" id="input' + tellerInput + '" placeholder="Type"/>';
     inputDiv.appendChild(variableDiv)
-    tellerInput++;
 }
+
 function addOutputVariable() {
+    tellerOutput++
     var outputDiv = document.getElementById('outputDiv');
     var variableDiv = document.createElement('div')
     variableDiv.setAttribute('id', 'input'+tellerOutput)
-    outputDiv.innerHTML += '<label for="output' + tellerOutput + '">Type output variable ' + tellerOutput + '</label>: ' +
-        '<input type="text" name="output" id="' + tellerOutput + '"/><br>' +
-        '<button type="button" onclick="deleteOutputVar(tellerOutput)">- output var</button>';
+    variableDiv.setAttribute('class', 'form-group')
+    variableDiv.innerHTML += '' +
+        '<label for="output' + tellerOutput + '">Output variable ' + tellerOutput + '</label>' +
+        '<input class="form-control" type="text" name="output" id="input' + tellerOutput + '" placeholder="Type"/>';
     outputDiv.appendChild(variableDiv)
-    tellerOutput++;
 }
-function deleteInputVar(teller){
-    console.log(teller)
-    document.getElementById("inputDiv").removeChild(document.getElementById('input'+teller))
+
+function deleteInputVar() {
+    if(tellerInput != 1) {
+        var select = document.getElementById('inputDiv')
+        select.removeChild(select.lastChild)
+        tellerInput--
+    }
 }
-function deleteOutputVar(teller){
-    console.log(teller)
-    document.getElementById("outputDiv").rem
+
+function deleteOutputVar() {
+    if(tellerOutput != 1) {
+        var select = document.getElementById('outputDiv')
+        select.removeChild(select.lastChild)
+        tellerOutput--
+    }
 }
 
 function addToQueue(){
