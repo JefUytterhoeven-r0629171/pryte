@@ -35,8 +35,10 @@ public class Controller extends javax.servlet.http.HttpServlet {
                                   HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
         String destination = "index.jsp";
+        String type = request.getParameter("type");
         loadIndexPage(request,response);
         RequestHandler handler;
+
         if (action != null) {
             try {
                 handler = factory.getController(action, model);
@@ -47,14 +49,17 @@ public class Controller extends javax.servlet.http.HttpServlet {
                 request.setAttribute("errors", errors);
                 destination = "index.jsp";
             }
-            RequestDispatcher view = request.getRequestDispatcher(destination);
-            view.forward(request, response);
-
+            if(type == null) {
+                RequestDispatcher view = request.getRequestDispatcher(destination);
+                view.forward(request, response);
+            }
         }
 
-        if (action == null) {
-            RequestDispatcher view = request.getRequestDispatcher(destination);
-            view.forward(request, response);
+        if(type == null) {
+            if (action == null) {
+                RequestDispatcher view = request.getRequestDispatcher(destination);
+                view.forward(request, response);
+            }
         }
     }
 

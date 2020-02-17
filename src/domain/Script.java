@@ -1,8 +1,12 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Script {
+    private static final AtomicInteger count = new AtomicInteger(0);
+    private final int ID;
+
     String path , extension, naam;
     ArrayList inputtypes = new ArrayList<String>();
     ArrayList outputtypes = new ArrayList<String>();
@@ -11,12 +15,17 @@ public class Script {
         this.path = path;
         this.extension = extension;
         this.naam = naam;
+        ID = count.incrementAndGet();
     }
+
 
     public Script() {
-
+        ID = count.incrementAndGet();
     }
 
+    public int getId(){
+        return ID;
+    }
     public void addInputType(String type){
         inputtypes.add(type);
     }

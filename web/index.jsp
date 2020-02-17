@@ -17,6 +17,9 @@
     <script type="text/javascript" src="js/scriptQueue.js"></script>
   </head>
   <body>
+  <script>
+      window.onload = getAllScripts();
+  </script>
     <div class="split left">
       <h3>Upload script</h3>
       <form id="addScriptForm" enctype="multipart/form-data" method="POST" action="Controller?action=UploadFile">
@@ -57,7 +60,7 @@
       </div>
 
       <h3>Overview</h3>
-      <table class="table">
+      <table id="availablescriptstable" class="table">
         <tr>
           <th>Naam</th>
           <th>Extensie</th>

@@ -48,5 +48,19 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../web4/jackson-databind-2.7.4.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../web4/jackson-core-2.7.4.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../web4/jackson-annotations-2.7.0.jar!/" />
+          <root url="file://$MODULE_DIR$" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/src" />
+        </SOURCES>
+      </library>
+    </orderEntry>
   </component>
 </module>
