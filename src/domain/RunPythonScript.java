@@ -22,7 +22,7 @@ public class RunPythonScript {
 
             processBuilder.start();
             Process process = processBuilder.start();
-
+            System.out.println('defd');
             // blocked :(
             BufferedReader nreader =
                     new BufferedReader(new InputStreamReader(process.getInputStream()));
