@@ -14,11 +14,10 @@
     <script type="text/javascript" src="js/scriptVariables.js"></script>
   </head>
   <body>
-  <<a href="Controller?action=Test">please pleas click me</a>
 
-  <form id="addScriptForm" enctype="multipart/form-data" name="addoefenmatriaalform" method="POST" action="Controller?action=UploadFile">
+  <form id="addScriptForm" enctype="multipart/form-data" method="POST" action="Controller?action=UploadFile">
     <label for="file">Upload script</label>
-    <input type="file" id="file" />
+    <input type="file" id="file" name="file"/>
 
     <label for="fileNaam">File naam</label>
     <input type="text" id="fileNaam"/>
