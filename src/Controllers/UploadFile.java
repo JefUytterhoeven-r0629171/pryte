@@ -24,7 +24,7 @@ public class UploadFile extends RequestHandler {
         System.out.println(FILE_TO);
 
         try {
-
+            // make the directory for the files if it doesn't yet exist
             File directory = new File(FILE_TO);
             if (! directory.exists()){
                 directory.mkdirs();
@@ -32,11 +32,12 @@ public class UploadFile extends RequestHandler {
                 // use directory.mkdirs(); here instead.
             }
 
-            System.out.println("enter try block RunFIle Runfile" + naam);
+            System.out.println("enter try block RunFIle Runfile" + request.getParameter("file")  );
             filePart = request.getPart("file");
-            FILE_TO = FILE_TO + "\\" + filePart.getName() + filePart.getSubmittedFileName();
-            System.out.println(filePart.getContentType() + "  " + filePart.getName());
+
             if (filePart != null) {
+                FILE_TO = FILE_TO + "\\"  + filePart.getSubmittedFileName();
+                System.out.println(filePart.getContentType() + "  " );
                 System.out.println("first if block RunFIle Runfile");
 
                 System.out.println("secund if block RunFIle Runfile");
@@ -44,14 +45,15 @@ public class UploadFile extends RequestHandler {
                 String extension = filePart.getContentType();
                 String[] parts = extension.split("/");
                 //extension = parts[parts.length - 1];
-                System.out.println("extention gotten " + filePart.getName() + filePart.getSubmittedFileName());
+                System.out.println("extention gotten " + filePart.getSubmittedFileName());
                 // obtains input stream of the upload file
                 inputStream = filePart.getInputStream();
                 File file = new File(FILE_TO);
                 copyInputStreamToFile(inputStream, file);
 
                 System.out.println("normaal is de file gesaved hier"+ file.getAbsolutePath());
-
+                RunPythonScript runner = new RunPythonScript();
+                runner.runScript(FILE_TO, null);
             }
 
         } catch (IOException e) {
