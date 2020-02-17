@@ -59,12 +59,12 @@
           <th>Add to queue</th>
           <th>Delete</th>
         </tr>
-        <%--<c:forEach var = "script" items="scripts">
+        <c:forEach var = "script" items="${scripts}">
           <tr>
             <td>${script.naam}</td>
             <td>${script.extension}</td>
           </tr>
-        </c:forEach>--%>
+        </c:forEach>
         <tr>
           <td>script1</td>
           <td>.py</td>

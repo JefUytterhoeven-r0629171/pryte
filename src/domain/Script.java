@@ -1,7 +1,11 @@
 package domain;
 
+import java.util.ArrayList;
+
 public class Script {
-    String path , extension, naam, output;
+    String path , extension, naam;
+    ArrayList inputtypes = new ArrayList<String>();
+    ArrayList outputtypes = new ArrayList<String>();
 
     public Script(String path, String extension, String naam) {
         this.path = path;
@@ -9,6 +13,17 @@ public class Script {
         this.naam = naam;
     }
 
+    public Script() {
+
+    }
+
+    public void addInputType(String type){
+        inputtypes.add(type);
+    }
+
+    public void addOutputTypes(String type){
+        outputtypes.add(type);
+    }
     public String getPath() {
         return path;
     }
@@ -33,11 +48,19 @@ public class Script {
         this.naam = naam;
     }
 
-    public String getOutput() {
-        return output;
+    public ArrayList getInputtypes() {
+        return inputtypes;
     }
 
-    public void setOutput(String output) {
-        this.output = output;
+    public void setInputtypes(ArrayList inputtypes) {
+        this.inputtypes = inputtypes;
+    }
+
+    public ArrayList getOutputtypes() {
+        return outputtypes;
+    }
+
+    public void setOutputtypes(ArrayList outputtypes) {
+        this.outputtypes = outputtypes;
     }
 }

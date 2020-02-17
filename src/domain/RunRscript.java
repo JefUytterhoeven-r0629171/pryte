@@ -1,29 +1,29 @@
 package domain;
 
-import javax.swing.filechooser.FileSystemView;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 
-public class RunPythonScript {
+public class RunRscript {
     public void runScript(String path, String argumenten){
         ProcessBuilder processBuilder = new ProcessBuilder();
         try {
+            System.out.println(Runtime.getRuntime().exec("C:\\PROGRA~1\\R\\R-3.6.2\\bin\\Rscript --vanilla " + path).getOutputStream());
+
+
+            InputStream instream = null;
             // Run this on Windows, cmd, /c = terminate after this run
             if(argumenten == null){
-                processBuilder.command("python", path );
+                instream = Runtime.getRuntime().exec("C:\\PROGRA~1\\R\\R-3.6.2\\bin\\Rscript --vanilla " + path).getInputStream();
             }else{
-                processBuilder.command("python", path, argumenten );
+                instream = Runtime.getRuntime().exec("C:\\PROGRA~1\\R\\R-3.6.2\\bin\\Rscript --vanilla " + path).getInputStream();
             }
 
-            processBuilder.start();
-            Process process = processBuilder.start();
 
             // blocked :(
             BufferedReader nreader =
-                    new BufferedReader(new InputStreamReader(process.getInputStream()));
+                    new BufferedReader(new InputStreamReader(instream));
 
             String nline;
             while ((nline = nreader.readLine()) != null) {
