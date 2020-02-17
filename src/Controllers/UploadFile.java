@@ -1,7 +1,7 @@
 package Controllers;
 
 import domain.RunPythonScript;
-import sun.misc.IOUtils;
+//import sun.misc.IOUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -20,7 +20,7 @@ public class UploadFile extends RequestHandler {
         InputStream inputStream = null; // input stream of the upload file
         Part filePart = null;
         String naam = request.getParameter("naam");
-        String FILE_TO = FileSystemView.getFileSystemView().getDefaultDirectory().getPath() +"\\pryteapp\\uploadedfiles";
+        String FILE_TO = FileSystemView.getFileSystemView().getDefaultDirectory().getPath() +"/pryteapp/uploadedfiles";
         System.out.println(FILE_TO);
 
         try {
