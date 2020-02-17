@@ -1,6 +1,7 @@
 package Controllers;
 
 import domain.RunPythonScript;
+import domain.RunRscript;
 //import sun.misc.IOUtils;
 
 import javax.servlet.ServletException;
@@ -52,7 +53,7 @@ public class UploadFile extends RequestHandler {
                 copyInputStreamToFile(inputStream, file);
 
                 System.out.println("normaal is de file gesaved hier"+ file.getAbsolutePath());
-                RunPythonScript runner = new RunPythonScript();
+                RunRscript runner = new RunRscript();
                 runner.runScript(FILE_TO, null);
             }
 

@@ -1,5 +1,6 @@
 package Controllers;
 
+import domain.Script;
 import service.Service;
 
 import javax.servlet.RequestDispatcher;
@@ -9,7 +10,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.filechooser.FileSystemView;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +35,7 @@ public class Controller extends javax.servlet.http.HttpServlet {
                                   HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
         String destination = "index.jsp";
-
+        loadIndexPage(request,response);
         RequestHandler handler;
         if (action != null) {
             try {
@@ -53,5 +56,30 @@ public class Controller extends javax.servlet.http.HttpServlet {
             RequestDispatcher view = request.getRequestDispatcher(destination);
             view.forward(request, response);
         }
+    }
+
+    public void loadIndexPage(HttpServletRequest request, HttpServletResponse response) {
+        ArrayList scripts = new ArrayList<Script>();
+        Script script = new Script();
+        File[] files = new File(FileSystemView.getFileSystemView().getDefaultDirectory().getPath() +"/pryteapp/uploadedfiles").listFiles();
+
+        for (File file : files) {
+            if (file.isDirectory()) {
+
+                System.out.println("dir: " + file.getName());
+            } else {
+                script.setNaam(file.getName());
+                script.setPath(file.getPath());
+                script.setExtension( file.getName().substring(file.getName().lastIndexOf(".") + 1));
+                System.out.println("file: " + file.getName() + "extension = " + file.getName().substring(file.getName().lastIndexOf(".") + 1));
+
+                scripts.add(script);
+                script = new Script();
+            }
+
+        }
+
+        request.setAttribute("scripts" , scripts);
+
     }
 }

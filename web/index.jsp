@@ -1,4 +1,4 @@
-<%@ taglib prefix="c" uri='http://java.sun.com/jsp/jstl/core' %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: jefuy
@@ -69,12 +69,12 @@
           <th>Add to queue</th>
           <th>Delete</th>
         </tr>
-        <%--<c:forEach var = "script" items="scripts">
+        <c:forEach var = "script" items="${scripts}">
           <tr>
             <td>${script.naam}</td>
             <td>${script.extension}</td>
           </tr>
-        </c:forEach>--%>
+        </c:forEach>
         <tr id="script1">
           <td>script1</td>
           <td>.py</td>
