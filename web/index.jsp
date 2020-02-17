@@ -23,10 +23,6 @@
         <div class="form-group">
           <input class="form-control-file" type="file" id="file" name="file"/>
         </div>
-        <div class="form-group">
-          <label for="fileNaam">File naam</label>
-          <input class="form-control" type="text" id="fileNaam"/>
-        </div>
         <hr/>
         <div id="inputDiv">
           <div class="form-group">
@@ -56,7 +52,8 @@
         <ol id="list" type="1">
 
         </ol>
-        <button type="button" onclick="runQueue()"> Run queue</button>
+        <button type="button" onclick="runQueue()">Run queue</button>
+        <button type="button" onclick="removeFromQueue()">Remove last item</button>
       </div>
 
       <h3>Overview</h3>
@@ -70,9 +67,13 @@
           <th>Delete</th>
         </tr>
         <c:forEach var = "script" items="${scripts}">
-          <tr>
+          <tr id="${script.naam}">
             <td>${script.naam}</td>
             <td>${script.extension}</td>
+            <td></td>
+            <td></td>
+            <td><button type="button" onclick="addToQueue('${script.naam}')">Add to queue</button></td>
+            <td><button type="button" onclick="deleteScript()"> X </button></td>
           </tr>
         </c:forEach>
         <tr id="script1">

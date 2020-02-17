@@ -12,6 +12,11 @@ function addToQueue(element){
 
 }
 
+function removeFromQueue() {
+    var select = document.getElementById('list');
+    select.removeChild(select.lastChild);
+}
+
 function runQueue(){
 
 }
