@@ -2,6 +2,7 @@ package Controllers;
 
 import domain.RunPythonScript;
 import domain.RunRscript;
+import domain.Script;
 //import sun.misc.IOUtils;
 
 import javax.servlet.ServletException;
@@ -12,6 +13,7 @@ import javax.servlet.http.Part;
 import javax.swing.filechooser.FileSystemView;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 
 
 @MultipartConfig(maxFileSize = 16177215)
@@ -22,7 +24,6 @@ public class UploadFile extends RequestHandler {
         Part filePart = null;
         String naam = request.getParameter("naam");
         String FILE_TO = FileSystemView.getFileSystemView().getDefaultDirectory().getPath() +"/pryteapp/uploadedfiles";
-        System.out.println(FILE_TO);
 
         try {
             // make the directory for the files if it doesn't yet exist
@@ -33,28 +34,22 @@ public class UploadFile extends RequestHandler {
                 // use directory.mkdirs(); here instead.
             }
 
-            System.out.println("enter try block RunFIle Runfile" + request.getParameter("file")  );
+
             filePart = request.getPart("file");
 
             if (filePart != null) {
                 FILE_TO = FILE_TO + "\\"  + filePart.getSubmittedFileName();
-                System.out.println(filePart.getContentType() + "  " );
-                System.out.println("first if block RunFIle Runfile");
 
-                System.out.println("secund if block RunFIle Runfile");
                 // get extension
                 String extension = filePart.getContentType();
                 String[] parts = extension.split("/");
                 //extension = parts[parts.length - 1];
-                System.out.println("extention gotten " + filePart.getSubmittedFileName());
                 // obtains input stream of the upload file
                 inputStream = filePart.getInputStream();
                 File file = new File(FILE_TO);
                 copyInputStreamToFile(inputStream, file);
 
-                System.out.println("normaal is de file gesaved hier"+ file.getAbsolutePath());
-                RunRscript runner = new RunRscript();
-                runner.runScript(FILE_TO, null);
+                addScriptToList(request, file);
             }
 
         } catch (IOException e) {
@@ -83,6 +78,22 @@ public class UploadFile extends RequestHandler {
             //IOUtils.copy(inputStream, outputStream);
 
         }
+
+    }
+
+    private void addScriptToList(HttpServletRequest request, File file){
+        ArrayList scripts = new ArrayList<Script>();
+        Script script = new Script();
+
+        scripts = (ArrayList) request.getAttribute("scripts");
+
+        script.setNaam(file.getName());
+        script.setPath(file.getPath());
+        script.setExtension( file.getName().substring(file.getName().lastIndexOf(".") + 1));
+
+        scripts.add(script);
+
+        request.setAttribute("scripts" , scripts);
 
     }
 

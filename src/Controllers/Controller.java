@@ -71,7 +71,6 @@ public class Controller extends javax.servlet.http.HttpServlet {
                 script.setNaam(file.getName());
                 script.setPath(file.getPath());
                 script.setExtension( file.getName().substring(file.getName().lastIndexOf(".") + 1));
-                System.out.println("file: " + file.getName() + "extension = " + file.getName().substring(file.getName().lastIndexOf(".") + 1));
 
                 scripts.add(script);
                 script = new Script();
