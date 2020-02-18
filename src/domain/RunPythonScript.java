@@ -7,9 +7,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
-public class RunPythonScript {
-    public void runScript(String path, String argumenten){
+public class RunPythonScript implements RunScript {
+    public String runScript(String path, String argumenten){
         ProcessBuilder processBuilder = new ProcessBuilder();
+        String output ="";
         try {
             // Run this on Windows, cmd, /c = terminate after this run
             if(argumenten == null){
@@ -28,11 +29,14 @@ public class RunPythonScript {
             String nline;
             while ((nline = nreader.readLine()) != null) {
                 System.out.println(nline);
+                output+= nline;
             }
 
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        return output;
     }
 }

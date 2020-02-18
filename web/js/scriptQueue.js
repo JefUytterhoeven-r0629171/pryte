@@ -60,13 +60,33 @@ function removeFromQueue() {
 
 
 function runQueue(){
-    xhr.open("GET", "Controller?action=RunQueScripts&type=assync", true);
+    xhr.open("POST", "Controller?action=RunQueScripts&type=assync", true);
     xhr.onreadystatechange = runQueResult;
     xhr.send(JSON.stringify(quescripts));
 }
 
 function runQueResult() {
+    console.log("wachten op de quescripts");
 
+    if (xhr.status == 200 && xhr.readyState == 4) {
+        console.log("de scripts zijn aangekomen");
+        qscripts = JSON.parse(xhr.responseText);
+        console.log(qscripts);
+        quescripts = qscripts;
+        var list = document.getElementById("list");
+        list.innerHTML = "";
+        for(var i in quescripts){
+            console.log(qscripts[i].id);
+
+            var li = document.createElement("li");
+            li.appendChild(document.createTextNode(quescripts[i].naam));
+            li.appendChild(document.createTextNode(quescripts[i].outputtypes));
+            li.setAttribute("id", quescripts[quescripts.length -1].id+"_id"); // added line
+            list.appendChild(li);
+        }
+
+
+    }
 }
 
 function SplitLefdMode(){

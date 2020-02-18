@@ -5,7 +5,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class Script {
     private static final AtomicInteger count = new AtomicInteger(0);
-    private final int ID;
+    private final int id;
 
     String path , extension, naam;
     ArrayList inputtypes = new ArrayList<String>();
@@ -15,16 +15,16 @@ public class Script {
         this.path = path;
         this.extension = extension;
         this.naam = naam;
-        ID = count.incrementAndGet();
+        id = count.incrementAndGet();
     }
 
 
     public Script() {
-        ID = count.incrementAndGet();
+        id = count.incrementAndGet();
     }
 
     public int getId(){
-        return ID;
+        return id;
     }
     public void addInputType(String type){
         inputtypes.add(type);
