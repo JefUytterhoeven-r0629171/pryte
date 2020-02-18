@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
   <head>
-    <title>$Title$</title>
+    <title>pryte</title>
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/style.css">
@@ -21,6 +21,8 @@
       window.onload = getAllScripts();
   </script>
     <div class="split left">
+      <input type="range" min="0" max="1" value="0" class="slider" id="myRange" onchange="SplitLefdMode()">
+      <div id="uploadscript">
       <h3>Upload script</h3>
       <form id="addScriptForm" enctype="multipart/form-data" method="POST" action="Controller?action=UploadFile">
         <div class="form-group">
@@ -48,9 +50,9 @@
         <br><br>
         <input type="submit" name="Submit" value="voeg toe" />
       </form>
-    </div>
-    <div class="split right">
-      <div id="queue">
+      </div>
+
+      <div id="queue" style="display: none;" >
         <h3>Queue</h3>
         <ol id="list" type="1">
 
@@ -58,6 +60,11 @@
         <button type="button" onclick="runQueue()">Run queue</button>
         <button type="button" onclick="removeFromQueue()">Remove last item</button>
       </div>
+
+    </div>
+
+    <div class="split right">
+
 
       <h3>Overview</h3>
       <table id="availablescriptstable" class="table">

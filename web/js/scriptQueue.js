@@ -1,11 +1,10 @@
 var xhr = new XMLHttpRequest();
-var scripts
+var scripts;
+var quescripts = new Array();
 function getAllScripts() {
-    console.log("de scripts worden opgeroepen");
     xhr.open("GET", "Controller?action=GetScripts&type=assync", true);
     xhr.onreadystatechange = getScripsLijst;
     xhr.send(null);
-
 }
 
 function getScripsLijst() {
@@ -16,31 +15,70 @@ function getScripsLijst() {
         scripts = JSON.parse(xhr.responseText);
         console.log(scripts);
         for(var i in scripts){
-            console.log(scripts[i].Id);
-            table.innerHTML +=  ' <tr id="' + scripts[i].naam + '"> <td>'+ scripts[i].naam +'</td> <td>'+ scripts[i].extension +'</td> <td></td> <td></td><td><button type="button" onclick="addToQueue( \'' + scripts[i].naam + '\')">Add to queue</button></td><td><button type="button" onclick="deleteScript()"> X </button></td> </tr>'
+            console.log(scripts[i].id);
+            table.innerHTML +=  ' <tr id="' + scripts[i].id + '"> <td>'+ scripts[i].naam +'</td> <td>'+ scripts[i].extension +'</td> <td></td> <td></td><td><button type="button" onclick="addToQueue( \'' + scripts[i].id + '\')">Add to queue</button></td><td><button type="button" onclick="deleteScript()"> X </button></td> </tr>'
         }
     }
 }
 
 function addToQueue(element){
     document.getElementById(element).style.border = "3px solid green";
-
+    slider = document.getElementById("myRange");
+    uploaddiv = document.getElementById("uploadscript");
+    quediv = document.getElementById("queue");
     var ol = document.getElementById("list");
 
-    if(document.getElementById(element+"_id") == null){
-        var li = document.createElement("li");
-        li.appendChild(document.createTextNode(element));
-        li.setAttribute("id", element+"_id"); // added line
-        ol.appendChild(li);
+    for(var i = 0 ; i < scripts.length ; i++){
+        if(scripts[i].id == element){
+            quescripts.push(scripts[i]);
+        }
     }
+    console.log(quescripts[quescripts.length-1]);
+
+
+        var li = document.createElement("li");
+        li.appendChild(document.createTextNode(quescripts[quescripts.length-1].naam));
+        li.setAttribute("id", quescripts[quescripts.length -1].id+"_id"); // added line
+        ol.appendChild(li);
+
+
+        //change slider to make the que vissible and hide the upload script div
+        uploaddiv.style.display = "none";
+        quediv.style.display = "block"
+        slider.value = 1;
+
 
 }
 
 function removeFromQueue() {
     var select = document.getElementById('list');
     select.removeChild(select.lastChild);
+
+    quescripts.remove(quescripts.length-1);
 }
 
-function runQueue(){
 
+
+function runQueue(){
+    xhr.open("GET", "Controller?action=RunQueScripts&type=assync", true);
+    xhr.onreadystatechange = runQueResult;
+    xhr.send(JSON.stringify(quescripts));
+}
+
+function runQueResult() {
+
+}
+
+function SplitLefdMode(){
+    slider = document.getElementById("myRange");
+    uploaddiv = document.getElementById("uploadscript");
+    quediv = document.getElementById("queue");
+
+    if (slider.value == 0) {
+        uploaddiv.style.display = "block";
+        quediv.style.display = "none"
+    }else{
+        uploaddiv.style.display = "none";
+        quediv.style.display = "block"
+    }
 }
