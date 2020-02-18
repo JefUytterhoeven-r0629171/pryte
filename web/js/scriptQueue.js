@@ -80,7 +80,7 @@ function runQueResult() {
 
             var li = document.createElement("li");
             li.appendChild(document.createTextNode(quescripts[i].naam));
-            li.appendChild(document.createTextNode(quescripts[i].outputtypes));
+            li.appendChild(document.createTextNode(quescripts[i].output));
             li.setAttribute("id", quescripts[quescripts.length -1].id+"_id"); // added line
             list.appendChild(li);
         }

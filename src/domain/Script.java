@@ -7,9 +7,9 @@ public class Script {
     private static final AtomicInteger count = new AtomicInteger(0);
     private final int id;
 
-    String path , extension, naam;
-    ArrayList inputtypes = new ArrayList<String>();
-    ArrayList outputtypes = new ArrayList<String>();
+    private String path , extension, naam, output;
+    private ArrayList inputtypes = new ArrayList<String>();
+    private ArrayList outputtypes = new ArrayList<String>();
 
     public Script(String path, String extension, String naam) {
         this.path = path;
@@ -26,6 +26,15 @@ public class Script {
     public int getId(){
         return id;
     }
+
+    public String getOutput() {
+        return output;
+    }
+
+    public void setOutput(String output) {
+        this.output = output;
+    }
+
     public void addInputType(String type){
         inputtypes.add(type);
     }

@@ -42,13 +42,13 @@ public class RunQueScripts extends RequestHandler {
                 switch (scripts[i].getExtension()){
                     case "py" :
                         runner = new RunPythonScript();
-                        output = runner.runScript(scripts[i].getPath(), "");
-                        scripts[i].addOutputTypes(output);
+                        output = runner.runScript(scripts[i].getPath(), output);
+                        scripts[i].setOutput(output);
                         break;
                     case "R":
                         runner = new RunnerRscript();
-                        output = runner.runScript(scripts[i].getPath(), "");
-                        scripts[i].addOutputTypes(output);
+                        output = runner.runScript(scripts[i].getPath(), output);
+                        scripts[i].setOutput(output);
                         break;
                 }
             }
