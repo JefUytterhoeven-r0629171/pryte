@@ -18,9 +18,9 @@ public class RunnerRscript implements RunScript {
             InputStream instream = null;
             // Run this on Windows, cmd, /c = terminate after this run
             if(argumenten == null){
-                instream = Runtime.getRuntime().exec("C:\\PROGRA~1\\R\\R-3.6.2\\bin\\Rscript --vanilla " + path ).getInputStream();
+                instream = Runtime.getRuntime().exec("Rscript --vanilla " + path ).getInputStream();
             }else{
-                instream = Runtime.getRuntime().exec("C:\\PROGRA~1\\R\\R-3.6.2\\bin\\Rscript --vanilla " + path +" "+ argumenten).getInputStream();
+                instream = Runtime.getRuntime().exec("Rscript --vanilla " + path +" "+ argumenten).getInputStream();
             }
 
 

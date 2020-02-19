@@ -9,7 +9,7 @@ function addInputVariable() {
     variableDiv.setAttribute('id', 'input'+tellerInput);
     variableDiv.innerHTML +=
         '<label for="input' + tellerInput +'">Input variable '+ tellerInput +'</label>: ' +
-        '<input class="form-control" type="text" name="input" id="input' + tellerInput + '" placeholder="Type"/>';
+        '<input class="form-control" type="text" name="input'+ tellerInput +'" id="input' + tellerInput + '" placeholder="Type"/>';
     inputDiv.appendChild(variableDiv)
 }
 
@@ -21,7 +21,7 @@ function addOutputVariable() {
     variableDiv.setAttribute('class', 'form-group');
     variableDiv.innerHTML += '' +
         '<label for="output' + tellerOutput + '">Output variable ' + tellerOutput + '</label>' +
-        '<input class="form-control" type="text" name="output" id="input' + tellerOutput + '" placeholder="Type"/>';
+        '<input class="form-control" type="text" name="output'+ tellerOutput +'" id="output' + tellerOutput + '" placeholder="Type"/>';
     outputDiv.appendChild(variableDiv)
 }
 
