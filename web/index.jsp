@@ -53,11 +53,18 @@
       </div>
       <div id="queue" style="display: none;" >
         <h3>Queue</h3>
-        <ol id="list" type="1">
-
-        </ol>
+        <table class="table" id="queueTable">
+          <tr>
+            <th>Naam</th>
+          </tr>
+        </table>
         <button type="button" onclick="runQueue()">Run queue</button>
         <button type="button" onclick="removeFromQueue()">Remove last item</button>
+        <br>
+        <h3>Output</h3>
+        <ol id="outputList" type="1">
+
+        </ol>
       </div>
     </div>
     <div class="split right">

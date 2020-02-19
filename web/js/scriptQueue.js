@@ -1,6 +1,6 @@
 var xhr = new XMLHttpRequest();
 var scripts;
-var quescripts = new Array();
+var queueScripts = new Array();
 
 function getAllScripts() {
     xhr.open("GET", "Controller?action=GetScripts&type=assync", true);
@@ -29,49 +29,55 @@ function addToQueue(element){
     slider = document.getElementById("myRange");
     uploaddiv = document.getElementById("uploadscript");
     quediv = document.getElementById("queue");
-    var ol = document.getElementById("list");
+    var tbody = document.getElementById('queueTable');
     for(var i = 0 ; i < scripts.length ; i++){
         if(scripts[i].id == element){
-            quescripts.push(scripts[i]);
+            queueScripts.push(scripts[i]);
         }
     }
-        var li = document.createElement("li");
-        li.appendChild(document.createTextNode(quescripts[quescripts.length-1].naam));
-        li.setAttribute("id", quescripts[quescripts.length -1].id+"_id"); // added line
-        ol.appendChild(li);
-        //change slider to make the que vissible and hide the upload script div
-        uploaddiv.style.display = "none";
-        quediv.style.display = "block"
-        slider.value = 1;
+    var row = tbody.insertRow(-1);
+    var cell1 = row.insertCell(0);
+    cell1.innerHTML = queueScripts[queueScripts.length-1].naam;
+    for (var j in queueScripts[queueScripts.length-1].outputlijst){
+        /*var cell = row.insertCell(j+1)
+        cell.innerHTML = queueScripts[queueScripts.length-1].outputlijst[j];
+        cell.setAttribute("id", "output" + j)*/
+        row.innerHTML += '<td>' + queueScripts[queueScripts.length-1].outputlijst[j] + '</td>'
+    }
+    row.setAttribute("id", queueScripts[queueScripts.length -1].id+"_id");
+    uploaddiv.style.display = "none";
+    quediv.style.display = "block"
+    slider.value = 1;
 }
 
 function removeFromQueue() {
-    var select = document.getElementById('list');
+    var select = document.getElementById('queueTable');
     select.removeChild(select.lastChild);
-    quescripts.pop();
+    queueScripts.pop();
 }
 
 function runQueue(){
-    xhr.open("POST", "Controller?action=RunQueScripts&type=assync", true);
+    xhr.open("POST", "Controller?action=RunqueueScripts&type=assync", true);
     xhr.onreadystatechange = runQueueResult;
-    xhr.send(JSON.stringify(quescripts));
+    xhr.send(JSON.stringify(queueScripts));
 }
 
 function runQueueResult() {
     if (xhr.status == 200 && xhr.readyState == 4) {
         qscripts = JSON.parse(xhr.responseText);
-        quescripts = qscripts;
-        var list = document.getElementById("list");
+        queueScripts = qscripts;
+        var list = document.getElementById("outputList");
         list.innerHTML = "";
-        for(var i in quescripts){
+        for(var i in queueScripts){
             var li = document.createElement("li");
-            li.appendChild(document.createTextNode(quescripts[i].naam));
-            for (var j in quescripts[i].outputlijst){
-                li.appendChild(document.createTextNode(quescripts[i].outputlijst[j]));
+            li.appendChild(document.createTextNode(queueScripts[i].naam));
+            for (var j in queueScripts[i].outputlijst){
+                li.appendChild(document.createTextNode(queueScripts[i].outputlijst[j]));
             }
-            li.setAttribute("id", quescripts[quescripts.length -1].id+"_id"); // added line
+            li.setAttribute("id", queueScripts[queueScripts.length -1].id+"_id"); // added line
             list.appendChild(li);
         }
+
     }
 }
 
