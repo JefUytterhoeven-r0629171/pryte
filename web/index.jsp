@@ -31,8 +31,7 @@
         <hr/>
         <div id="inputDiv">
           <div class="form-group">
-            <label for="input1">Input variable 1</label>
-            <input class="form-control" type="text" name="input" id="input1" placeholder="Type">
+
           </div>
         </div>
         <button type="button" onclick="addInputVariable()">+ input var</button>
@@ -40,8 +39,7 @@
         <hr/>
         <div id="outputDiv">
           <div class="form-group">
-            <label for="input1">Output variable 1</label>
-            <input class="form-control" type="text" name="output" id="output1" placeholder="Type">
+
           </div>
         </div>
         <button type="button" onclick="addOutputVariable()">+ output var</button>

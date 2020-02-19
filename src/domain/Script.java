@@ -28,6 +28,7 @@ public class Script {
     }
 
     public void setOutputlijstString(String output){
+        outputlijst = new ArrayList<String>();
         String[] out = output.split("_-_");
         System.out.println(out);
         for(int  i=0 ; i < out.length; i++){
