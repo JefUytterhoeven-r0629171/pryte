@@ -7,8 +7,9 @@ public class Script {
     private static final AtomicInteger count = new AtomicInteger(0);
     private final int id;
 
-    private String path , extension, naam, output;
+    private String path , extension, naam /*output*/;
     private ArrayList inputtypes = new ArrayList<String>();
+    private  ArrayList outputlijst = new ArrayList<String>();
     private ArrayList outputtypes = new ArrayList<String>();
 
     public Script(String path, String extension, String naam) {
@@ -18,6 +19,21 @@ public class Script {
         id = count.incrementAndGet();
     }
 
+    public ArrayList getOutputlijst() {
+        return outputlijst;
+    }
+
+    public void setOutputlijst(ArrayList outputlijst) {
+        this.outputlijst = outputlijst;
+    }
+
+    public void setOutputlijstString(String output){
+        String[] out = output.split("_-_");
+        System.out.println(out);
+        for(int  i=0 ; i < out.length; i++){
+            outputlijst.add(out[i]);
+        }
+    }
 
     public Script() {
         id = count.incrementAndGet();
@@ -27,13 +43,22 @@ public class Script {
         return id;
     }
 
-    public String getOutput() {
+   /* public String getOutput() {
+        String output = "";
+
         return output;
     }
-
+/*
     public void setOutput(String output) {
         this.output = output;
-    }
+
+        String[] out = output.split("_$_");
+
+        for(int  i=0 ; i < out.length; i++){
+            outputlijst.add(out[i]);
+        }
+
+    }*/
 
     public void addInputType(String type){
         inputtypes.add(type);

@@ -34,6 +34,8 @@ public class RunQueScripts extends RequestHandler {
 
                 System.out.println(json);
             }
+
+
             scripts = new ObjectMapper().readValue(json, Script[].class);
 
             String output = null;
@@ -43,12 +45,12 @@ public class RunQueScripts extends RequestHandler {
                     case "py" :
                         runner = new RunPythonScript();
                         output = runner.runScript(scripts[i].getPath(), output);
-                        scripts[i].setOutput(output);
+                        scripts[i].setOutputlijstString(output);
                         break;
                     case "R":
                         runner = new RunnerRscript();
                         output = runner.runScript(scripts[i].getPath(), output);
-                        scripts[i].setOutput(output);
+                        scripts[i].setOutputlijstString(output);
                         break;
                 }
             }

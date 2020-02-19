@@ -66,7 +66,9 @@ function runQueueResult() {
         for(var i in quescripts){
             var li = document.createElement("li");
             li.appendChild(document.createTextNode(quescripts[i].naam));
-            li.appendChild(document.createTextNode(quescripts[i].output));
+            for (var j in quescripts[i].outputlijst){
+                li.appendChild(document.createTextNode(quescripts[i].outputlijst[j]));
+            }
             li.setAttribute("id", quescripts[quescripts.length -1].id+"_id"); // added line
             list.appendChild(li);
         }
