@@ -1,5 +1,6 @@
 package Controllers;
 
+import domain.CreateScriptConfigFile;
 import domain.Script;
 //import sun.misc.IOUtils;
 
@@ -20,6 +21,9 @@ public class UploadFile extends RequestHandler {
         InputStream inputStream = null; // input stream of the upload file
         Part filePart = null;
         String naam = request.getParameter("naam");
+        ArrayList<String> outvartypes = new ArrayList<String>();
+        ArrayList<String> invartypes = new ArrayList<String>();
+
         String FILE_TO = FileSystemView.getFileSystemView().getDefaultDirectory().getPath() +"/pryteapp/uploadedfiles";
 
         try {
@@ -47,6 +51,27 @@ public class UploadFile extends RequestHandler {
                 copyInputStreamToFile(inputStream, file);
 
                 addScriptToList(request, file);
+
+                //createconffile
+                String inputformname = "input2";
+                int index = 3;
+                while (request.getParameter(inputformname)!=null){
+                    invartypes.add(request.getParameter(inputformname));
+                    inputformname = "input" + index;
+                    index++;
+                    System.out.println(invartypes.size() + inputformname);
+                }
+                String outputformname = "output2";
+                index = 3;
+                while (request.getParameter(outputformname)!=null){
+                    outvartypes.add(request.getParameter(outputformname));
+                    outputformname = "output" + index;
+                    index++;
+                    System.out.println(outvartypes.size() + outputformname);
+                }
+
+                CreateScriptConfigFile createconffile = new CreateScriptConfigFile();
+                createconffile.CreateConf(invartypes , outvartypes , filePart.getSubmittedFileName());
             }
 
         } catch (IOException e) {
@@ -70,10 +95,6 @@ public class UploadFile extends RequestHandler {
             while ((read = inputStream.read(bytes)) != -1) {
                 outputStream.write(bytes, 0, read);
             }
-
-            // commons-io
-            //IOUtils.copy(inputStream, outputStream);
-
         }
 
     }
