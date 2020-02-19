@@ -21,7 +21,7 @@
       window.onload = getAllScripts();
   </script>
     <div class="split left">
-      <input type="range" min="0" max="1" value="0" class="slider" id="myRange" onchange="SplitLefdMode()">
+      <input type="range" min="0" max="1" value="0" class="slider" id="myRange" onchange="SplitLeftMode()">
       <div id="uploadscript">
       <h3>Upload script</h3>
       <form id="addScriptForm" enctype="multipart/form-data" method="POST" action="Controller?action=UploadFile">
@@ -51,7 +51,6 @@
         <input type="submit" name="Submit" value="voeg toe" />
       </form>
       </div>
-
       <div id="queue" style="display: none;" >
         <h3>Queue</h3>
         <ol id="list" type="1">
@@ -60,12 +59,8 @@
         <button type="button" onclick="runQueue()">Run queue</button>
         <button type="button" onclick="removeFromQueue()">Remove last item</button>
       </div>
-
     </div>
-
     <div class="split right">
-
-
       <h3>Overview</h3>
       <table id="availablescriptstable" class="table">
         <tr>
@@ -76,35 +71,7 @@
           <th>Add to queue</th>
           <th>Delete</th>
         </tr>
-        <c:forEach var = "script" items="${scripts}">
-          <tr id="${script.naam}">
-            <td>${script.naam}</td>
-            <td>${script.extension}</td>
-            <td></td>
-            <td></td>
-            <td><button type="button" onclick="addToQueue('${script.naam}')">Add to queue</button></td>
-            <td><button type="button" onclick="deleteScript()"> X </button></td>
-          </tr>
-        </c:forEach>
-        <tr id="script1">
-          <td>script1</td>
-          <td>.py</td>
-          <td></td>
-          <td></td>
-          <td><button type="button" onclick="addToQueue('script1')">Add to queue</button></td>
-          <td><button type="button" onclick="deleteScript()"> X </button></td>
-        </tr>
-        <tr id="script2">
-          <td>script2</td>
-          <td>.r</td>
-          <td></td>
-          <td></td>
-          <td><button type="button" onclick="addToQueue('script2')">Add to queue</button></td>
-          <td><button type="button" onclick="deleteScript()"> X </button></td>
-        </tr>
-
       </table>
     </div>
-
   </body>
 </html>

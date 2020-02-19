@@ -40,8 +40,3 @@ function deleteOutputVar() {
         tellerOutput--;
     }
 }
-
-
-function deleteScript(){
-
-}
