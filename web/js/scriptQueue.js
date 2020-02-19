@@ -1,6 +1,7 @@
 var xhr = new XMLHttpRequest();
 var scripts;
 var quescripts = new Array();
+
 function getAllScripts() {
     xhr.open("GET", "Controller?action=GetScripts&type=assync", true);
     xhr.onreadystatechange = getScripsLijst;
@@ -76,11 +77,13 @@ function runQueResult() {
         var list = document.getElementById("list");
         list.innerHTML = "";
         for(var i in quescripts){
-            console.log(qscripts[i].id);
+            console.log(qscripts[i].outputlijst);
 
             var li = document.createElement("li");
             li.appendChild(document.createTextNode(quescripts[i].naam));
-            li.appendChild(document.createTextNode(quescripts[i].output));
+            for (var j in quescripts[i].outputlijst){
+                li.appendChild(document.createTextNode(quescripts[i].outputlijst[j]));
+            }
             li.setAttribute("id", quescripts[quescripts.length -1].id+"_id"); // added line
             list.appendChild(li);
         }
