@@ -51,10 +51,17 @@
       </div>
       <div id="queue" style="display: none;" >
         <h3>Queue</h3>
-        <table class="table" id="queueTable">
-          <tr>
-            <th>Naam</th>
-          </tr>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Naam</th>
+              <th>Input</th>
+              <th>Output</th>
+            </tr>
+          </thead>
+          <tbody id="queueTable">
+
+          </tbody>
         </table>
         <button type="button" onclick="runQueue()">Run queue</button>
         <button type="button" onclick="removeFromQueue()">Remove last item</button>
@@ -67,15 +74,21 @@
     </div>
     <div class="split right">
       <h3>Overview</h3>
-      <table id="availablescriptstable" class="table">
-        <tr>
-          <th>Naam</th>
-          <th>Extensie</th>
-          <th>Input types</th>
-          <th>Output types</th>
-          <th>Add to queue</th>
-          <th>Delete</th>
-        </tr>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Naam</th>
+            <th>Extensie</th>
+            <th>Input types</th>
+            <th>Output types</th>
+            <th>Add to queue</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody id="availablescriptstable">
+
+        </tbody>
+
       </table>
     </div>
   </body>
