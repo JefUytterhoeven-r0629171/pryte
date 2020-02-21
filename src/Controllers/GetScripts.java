@@ -20,15 +20,15 @@ public class GetScripts extends RequestHandler {
         Script script = new Script();
         String inputvar ="", outputvar="";
 
-        System.out.println("scripts are being loaded");
+
         File[] files = new File(FileSystemView.getFileSystemView().getDefaultDirectory().getPath() +"/pryteapp/uploadedfiles").listFiles();
         File conffile;
-        System.out.println("whats wrong");
+
 
 
         for (File file : files) {
             if (file.isDirectory()) {
-                System.out.println("dir: " + file.getName());
+
 
             } else {
                 script.setNaam(file.getName());
@@ -42,7 +42,7 @@ public class GetScripts extends RequestHandler {
                     String line = br.readLine();
 
                     while (line != null) {
-                        System.out.println(line);
+
                         if(line.equals(":::inputvar:::")){
                             inputvar = br.readLine();
                         }
@@ -66,8 +66,8 @@ public class GetScripts extends RequestHandler {
                     e.printStackTrace();
                 }
 
-                System.out.println(script.getInputtypes());
-                System.out.println(script.getOutputtypes());
+
+
                 scripts.add(script);
                 script = new Script();
             }

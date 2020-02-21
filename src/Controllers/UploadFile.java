@@ -59,7 +59,7 @@ public class UploadFile extends RequestHandler {
                     invartypes.add(request.getParameter(inputformname));
                     inputformname = "input" + index;
                     index++;
-                    System.out.println(invartypes.size() + inputformname);
+
                 }
                 String outputformname = "output2";
                 index = 3;
@@ -67,7 +67,7 @@ public class UploadFile extends RequestHandler {
                     outvartypes.add(request.getParameter(outputformname));
                     outputformname = "output" + index;
                     index++;
-                    System.out.println(outvartypes.size() + outputformname);
+
                 }
 
                 CreateScriptConfigFile createconffile = new CreateScriptConfigFile();

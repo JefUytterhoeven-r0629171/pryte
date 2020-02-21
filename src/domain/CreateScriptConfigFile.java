@@ -22,7 +22,9 @@ public class CreateScriptConfigFile {
             for (int i=0; i <inputvar.size() ; i++){
                 types += inputvar.get(i) +",";
             }
-            types = types.substring(0 , types.length() -1);
+            if(!types.equals("")) {
+                types = types.substring(0, types.length() - 1);
+            }
             types +=';';
             lines.add(types);
             lines.add(":::outputvar:::");
@@ -30,10 +32,11 @@ public class CreateScriptConfigFile {
             for (int i=0; i <outputvar.size() ; i++){
                 types += outputvar.get(i) +",";
             }
-            types = types.substring(0 , types.length() -1);
+            if(!types.equals("")) {
+                types = types.substring(0, types.length() - 1);
+            }
             types +=';';
             lines.add(types);
-            System.out.println(lines);
 
             File directory = new File(FileSystemView.getFileSystemView().getDefaultDirectory().getPath() +"/pryteapp/configfiles/");
             if (! directory.exists()){

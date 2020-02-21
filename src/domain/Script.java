@@ -10,6 +10,7 @@ public class Script {
     private String path , extension, naam /*output*/;
     private ArrayList inputtypes = new ArrayList<String>();
     private  ArrayList outputlijst = new ArrayList<String>();
+    private  ArrayList inputlijst = new ArrayList<String>();
     private ArrayList outputtypes = new ArrayList<String>();
 
     public Script(String path, String extension, String naam) {
@@ -30,7 +31,7 @@ public class Script {
     public void setOutputlijstString(String output){
         outputlijst = new ArrayList<String>();
         String[] out = output.split("_-_");
-        System.out.println(out);
+
         for(int  i=0 ; i < out.length; i++){
             outputlijst.add(out[i]);
         }
@@ -106,5 +107,28 @@ public class Script {
 
     public void setOutputtypes(ArrayList outputtypes) {
         this.outputtypes = outputtypes;
+    }
+
+    public void addOutput(String line) {
+        outputlijst.add(line);
+    }
+
+    public ArrayList<String> getInputlijst() {
+        return inputlijst;
+    }
+
+    public void setInputlijst(ArrayList inputlijst) {
+        this.inputlijst = inputlijst;
+    }
+
+    public void resetoutput() {
+        outputlijst = new ArrayList<String>();
+    }
+    public void resetinput() {
+        inputlijst = new ArrayList<String>();
+    }
+
+    public void addInput(String nieuw) {
+        inputlijst.add(nieuw);
     }
 }

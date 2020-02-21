@@ -8,8 +8,9 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
 public class RunPythonScript implements RunScript {
-    public String runScript(String path, String argumenten){
+    public Process runScript(String path, String argumenten){
         ProcessBuilder processBuilder = new ProcessBuilder();
+        Process process = null;
         String output ="";
         try {
             // Run this on Windows, cmd, /c = terminate after this run
@@ -19,9 +20,11 @@ public class RunPythonScript implements RunScript {
                 processBuilder.command("python", path, argumenten );
             }
 
+            System.out.println("het proces word aangemaakt");
             processBuilder.start();
-            Process process = processBuilder.start();
+            process = processBuilder.start();
 
+            /*
             // blocked :(
             BufferedReader nreader =
                     new BufferedReader(new InputStreamReader(process.getInputStream()));
@@ -31,12 +34,12 @@ public class RunPythonScript implements RunScript {
                 System.out.println(nline);
                 output+= nline;
             }
-
+        */
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        return output;
+        System.out.println("het proces is gemaakt en word doorgegeven");
+        return process;
     }
 }

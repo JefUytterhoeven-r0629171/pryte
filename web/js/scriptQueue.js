@@ -38,6 +38,8 @@ function addToQueue(element){
     var row = tbody.insertRow(-1);
     var cell1 = row.insertCell(0);
     cell1.innerHTML = queueScripts[queueScripts.length-1].naam;
+    console.log(queueScripts[queueScripts.length-1]);
+
     for (var j in queueScripts[queueScripts.length-1].outputlijst){
         /*var cell = row.insertCell(j+1)
         cell.innerHTML = queueScripts[queueScripts.length-1].outputlijst[j];
@@ -57,7 +59,7 @@ function removeFromQueue() {
 }
 
 function runQueue(){
-    xhr.open("POST", "Controller?action=RunqueueScripts&type=assync", true);
+    xhr.open("POST", "Controller?action=RunQueueScripts&type=assync", true);
     xhr.onreadystatechange = runQueueResult;
     xhr.send(JSON.stringify(queueScripts));
 }

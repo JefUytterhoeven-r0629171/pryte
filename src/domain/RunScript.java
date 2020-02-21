@@ -1,5 +1,5 @@
 package domain;
 
 public interface RunScript {
-    public String runScript(String path, String argumenten);
+    public Process runScript(String path, String argumenten);
 }

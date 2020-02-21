@@ -71,7 +71,7 @@ public class Controller extends javax.servlet.http.HttpServlet {
         for (File file : files) {
             if (file.isDirectory()) {
 
-                System.out.println("dir: " + file.getName());
+
             } else {
                 script.setNaam(file.getName());
                 script.setPath(file.getPath());
