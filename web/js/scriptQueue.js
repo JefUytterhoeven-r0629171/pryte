@@ -1,6 +1,8 @@
 var xhr = new XMLHttpRequest();
 var scripts;
 var queueScripts = new Array();
+var variableCounter = 1;
+var outputVariableCounter = 1;
 
 function getAllScripts() {
     xhr.open("GET", "Controller?action=GetScripts&type=assync", true);
@@ -9,11 +11,30 @@ function getAllScripts() {
 }
 
 function getScriptLijst() {
-    var table = document.getElementById("availablescriptstable");
+    var tbody = document.getElementById("availablescriptstable");
+    console.log("getScriptLijst");
     if (xhr.status == 200 && xhr.readyState == 4) {
         scripts = JSON.parse(xhr.responseText);
         for(var i in scripts){
-            table.innerHTML +=  '<tr id="' + scripts[i].id + '"> <td>' + scripts[i].naam +'</td> <td>'+ scripts[i].extension +'</td> <td></td> <td></td><td><button type="button" onclick="addToQueue( \'' + scripts[i].id + '\')">Add to queue</button></td><td><button type="button" onclick="deleteScript()"> X </button></td> </tr>'
+            var row = tbody.insertRow(-1);
+            row.setAttribute("id", scripts[i].id )
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            var cell3 = row.insertCell(2);
+            var cell4 = row.insertCell(3);
+            var cell5 = row.insertCell(4);
+            var cell6 = row.insertCell(5);
+            cell1.innerHTML = scripts[i].naam;
+            cell2.innerHTML = scripts[i].extension;
+            for(var j in scripts[i].inputtypes){
+                cell3.innerHTML += scripts[i].inputtypes[j] + ', ';
+            }
+            for(var k in scripts[i].outputtypes){
+                cell4.innerHTML += scripts[i].outputtypes[k] + ', ';
+            }
+            cell5.innerHTML += '<button type="button" onclick="addToQueue( \'' + scripts[i].id + '\')">Add to queue</button>'
+            cell6.innerHTML += '<button type="button" onclick="deleteScript()"> X </button>'
+
         }
     }
 }
@@ -25,10 +46,11 @@ function deleteScript(){
 }
 
 function addToQueue(element){
-    document.getElementById(element).style.border = "3px solid green";
+    //document.getElementById(element).style.border = "3px solid green";
     slider = document.getElementById("myRange");
     uploaddiv = document.getElementById("uploadscript");
     quediv = document.getElementById("queue");
+
     var tbody = document.getElementById('queueTable');
     for(var i = 0 ; i < scripts.length ; i++){
         if(scripts[i].id == element){
@@ -37,23 +59,30 @@ function addToQueue(element){
     }
     var row = tbody.insertRow(-1);
     var cell1 = row.insertCell(0);
-    cell1.innerHTML = queueScripts[queueScripts.length-1].naam;
-    console.log(queueScripts[queueScripts.length-1]);
+    var cell2 = row.insertCell(1);
+    var cell3 = row.insertCell(2);
 
-    for (var j in queueScripts[queueScripts.length-1].outputlijst){
-        /*var cell = row.insertCell(j+1)
-        cell.innerHTML = queueScripts[queueScripts.length-1].outputlijst[j];
-        cell.setAttribute("id", "output" + j)*/
-        row.innerHTML += '<td>' + queueScripts[queueScripts.length-1].outputlijst[j] + '</td>'
+    cell1.innerHTML = queueScripts[queueScripts.length-1].naam;
+    for (var j in queueScripts[queueScripts.length-1].inputtypes){
+        cell2.innerHTML += '<td><p>input_' + queueScripts[queueScripts.length-1].inputtypes[j] + variableCounter + '</p><input id="input_'+ queueScripts[queueScripts.length-1].inputtypes[j] + variableCounter +'" placeholder="' + queueScripts[queueScripts.length-1].inputtypes[j] + '"/></td><br>';
+        variableCounter++;
+    }
+    for (var k in queueScripts[queueScripts.length-1].outputtypes){
+        cell3.innerHTML += '<td>' + queueScripts[queueScripts.length-1].outputtypes[k] + ' ' + outputVariableCounter + '</td>';
+        outputVariableCounter++;
     }
     row.setAttribute("id", queueScripts[queueScripts.length -1].id+"_id");
     uploaddiv.style.display = "none";
-    quediv.style.display = "block"
+    quediv.style.display = "block";
     slider.value = 1;
 }
 
 function removeFromQueue() {
     var select = document.getElementById('queueTable');
+    if (select.rows.length == 1) {
+        variableCounter = 0;
+        outputVariableCounter = 0;
+    }
     select.removeChild(select.lastChild);
     queueScripts.pop();
 }
