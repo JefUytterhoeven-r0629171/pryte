@@ -64,6 +64,7 @@ function addToQueue(element){
 
     cell1.innerHTML = queueScripts[queueScripts.length-1].naam;
     for (var j in queueScripts[queueScripts.length-1].inputtypes){
+        console.log(j);
         cell2.innerHTML += '<td><p>input_' + queueScripts[queueScripts.length-1].inputtypes[j] + variableCounter + '</p><input id="input_'+ queueScripts[queueScripts.length-1].inputtypes[j] + variableCounter +'" placeholder="' + queueScripts[queueScripts.length-1].inputtypes[j] + '"/></td><br>';
         variableCounter++;
     }

@@ -53,7 +53,7 @@ public class GetScripts extends RequestHandler {
                     }
                     String[] splitvar = inputvar.split(",");
                     for(int i=0 ; i< splitvar.length;i++){
-                        script.addInputType(splitvar[i]);
+                        script.addInputType(splitvar[i].substring(0, splitvar[i].length()-1));
                     }
 
                     splitvar = outputvar.split(",");
@@ -61,7 +61,7 @@ public class GetScripts extends RequestHandler {
                         script.addOutputTypes(splitvar[i].substring(0, splitvar[i].length()-1));
                     }
                 } catch (FileNotFoundException e) {
-                    e.printStackTrace();
+                    System.out.println("de conf file voor " +script.getPath() + " kon niet worden gevonden");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

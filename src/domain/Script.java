@@ -131,4 +131,5 @@ public class Script {
     public void addInput(String nieuw) {
         inputlijst.add(nieuw);
     }
+
 }
