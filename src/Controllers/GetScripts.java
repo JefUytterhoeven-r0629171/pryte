@@ -53,12 +53,15 @@ public class GetScripts extends RequestHandler {
                     }
                     String[] splitvar = inputvar.split(",");
                     for(int i=0 ; i< splitvar.length;i++){
-                        script.addInputType(splitvar[i].substring(0, splitvar[i].length()-1));
+                        splitvar[i] = splitvar[i].replace(";","");
+                        script.addInputType(splitvar[i]);
+
                     }
 
                     splitvar = outputvar.split(",");
                     for(int i=0 ; i< splitvar.length;i++){
-                        script.addOutputTypes(splitvar[i].substring(0, splitvar[i].length()-1));
+                        splitvar[i] = splitvar[i].replace(";","");
+                        script.addOutputTypes(splitvar[i]);
                     }
                 } catch (FileNotFoundException e) {
                     System.out.println("de conf file voor " +script.getPath() + " kon niet worden gevonden");

@@ -49,7 +49,7 @@ public class Controller extends javax.servlet.http.HttpServlet {
         System.out.println(login);
 
         //UNCOMMENT CODE BELOW TO ACTIVATE THE LOGIN
-        if(login != null && login.equals("true")){
+        //if(login != null && login.equals("true")){
             if (action != null) {
                 try {
                     handler = factory.getController(action, model);
@@ -66,7 +66,7 @@ public class Controller extends javax.servlet.http.HttpServlet {
                 }
 
             }
-       }else {
+      /*}else {
             // use this code to add the login
             if(action != null && action.equals("Login")){
                 this.login(request, response);
@@ -79,7 +79,7 @@ public class Controller extends javax.servlet.http.HttpServlet {
                 view.forward(request, response);
             }
 
-        }
+        }*/
 
         if(type == null) {
             if (action == null) {
