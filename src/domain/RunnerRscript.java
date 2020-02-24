@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import static javafx.scene.input.KeyCode.R;
-
 public class RunnerRscript implements RunScript {
 
     public Process runScript(String path, String argumenten){
