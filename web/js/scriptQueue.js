@@ -3,6 +3,9 @@ var scripts;
 var queueScripts = new Array();
 var variableCounter = 1;
 var outputVariableCounter = 1;
+var queueOutputVariables = new Array();
+var queueScriptCounter = 1;
+var totalOutputslastQueuescript = 0;
 
 function getAllScripts() {
     xhr.open("GET", "Controller?action=GetScripts&type=assync", true);
@@ -62,29 +65,45 @@ function addToQueue(element){
     var cell2 = row.insertCell(1);
     var cell3 = row.insertCell(2);
 
+
     cell1.innerHTML = queueScripts[queueScripts.length-1].naam;
     for (var j in queueScripts[queueScripts.length-1].inputtypes){
-        cell2.innerHTML += '<td><p>input_' + queueScripts[queueScripts.length-1].inputtypes[j] + variableCounter + '</p><input id="input_'+ queueScripts[queueScripts.length-1].inputtypes[j] + variableCounter +'" placeholder="' + queueScripts[queueScripts.length-1].inputtypes[j] + '"/></td><br>';
-        variableCounter++;
+        var select = document.createElement("select")
+        cell2.appendChild(select);
+        for (var outputVar in queueOutputVariables){
+            var option = document.createElement('option');
+            option.setAttribute("value",  queueOutputVariables[outputVar]);
+            option.innerHTML = queueOutputVariables[outputVar];
+            select.appendChild(option);
+        }
     }
+    totalOutputslastQueuescript = queueScripts[queueScripts.length-1].outputtypes.length;
     for (var k in queueScripts[queueScripts.length-1].outputtypes){
-        cell3.innerHTML += '<td>' + queueScripts[queueScripts.length-1].outputtypes[k] + ' ' + outputVariableCounter + '</td>';
+        queueOutputVariables.push(queueScripts[queueScripts.length-1].outputtypes[k] + '_' + queueScriptCounter  + '_' + outputVariableCounter);
+        cell3.innerHTML += '<td>' + queueScripts[queueScripts.length-1].outputtypes[k] + '_' + queueScriptCounter + '_' + outputVariableCounter + '</td><br>';
         outputVariableCounter++;
     }
     row.setAttribute("id", queueScripts[queueScripts.length -1].id+"_id");
     uploaddiv.style.display = "none";
     quediv.style.display = "block";
     slider.value = 1;
+    queueScriptCounter++;
+    outputVariableCounter = 1;
 }
 
 function removeFromQueue() {
-    var select = document.getElementById('queueTable');
-    if (select.rows.length == 1) {
+    var queueTable = document.getElementById('queueTable');
+    if (queueTable.rows.length == 1) {
         variableCounter = 0;
         outputVariableCounter = 0;
     }
-    select.removeChild(select.lastChild);
+    queueTable.removeChild(queueTable.lastChild);
+    outputVariableCounter--;
+    queueScriptCounter--;
     queueScripts.pop();
+    for(var i = 0; i < totalOutputslastQueuescript; i++) {
+        queueOutputVariables.pop();
+    }
 }
 
 function runQueue(){
