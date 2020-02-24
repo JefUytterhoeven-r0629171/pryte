@@ -1,5 +1,5 @@
-let tellerInput = 1;
-let tellerOutput = 1;
+let tellerInput = 0;
+let tellerOutput = 0;
 
 function addInputVariable() {
     tellerInput++;
@@ -26,7 +26,7 @@ function addOutputVariable() {
 }
 
 function deleteInputVar() {
-    if(tellerInput != 1) {
+    if(tellerInput != 0) {
         var select = document.getElementById('inputDiv');
         select.removeChild(select.lastChild);
         tellerInput--
@@ -34,7 +34,7 @@ function deleteInputVar() {
 }
 
 function deleteOutputVar() {
-    if(tellerOutput != 1) {
+    if(tellerOutput != 0) {
         var select = document.getElementById('outputDiv');
         select.removeChild(select.lastChild);
         tellerOutput--;

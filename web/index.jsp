@@ -34,19 +34,19 @@
 
           </div>
         </div>
-        <button type="button" onclick="addInputVariable()">+ input var</button>
-        <button type="button" onclick="deleteInputVar()">- input var</button>
+        <button type="button" class="btn btn-outline-success btn-sm" onclick="addInputVariable()">+ input var</button>
+        <button type="button" class="btn btn-outline-danger btn-sm" onclick="deleteInputVar()">- input var</button>
         <hr/>
         <div id="outputDiv">
           <div class="form-group">
 
           </div>
         </div>
-        <button type="button" onclick="addOutputVariable()">+ output var</button>
-        <button type="button" onclick="deleteOutputVar()">- output var</button>
+        <button type="button" class="btn btn-outline-success btn-sm" onclick="addOutputVariable()">+ output var</button>
+        <button type="button" class="btn btn-outline-danger btn-sm" onclick="deleteOutputVar()">- output var</button>
         <hr/>
         <br><br>
-        <input type="submit" name="Submit" value="voeg toe" />
+        <input class="btn-outline-secondary" type="submit" name="Submit" value="voeg toe" />
       </form>
       </div>
       <div id="queue" style="display: none;" >
@@ -63,8 +63,8 @@
 
           </tbody>
         </table>
-        <button type="button" onclick="runQueue()">Run queue</button>
-        <button type="button" onclick="removeFromQueue()">Remove last item</button>
+        <button type="button" class="btn btn-outline-success" onclick="runQueue()">Run queue</button>
+        <button type="button" class="btn btn-outline-danger" onclick="removeFromQueue()">Remove last item</button>
         <br>
         <h3>Output</h3>
         <ol id="outputList" type="1">
