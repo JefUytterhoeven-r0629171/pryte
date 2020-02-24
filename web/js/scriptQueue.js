@@ -30,7 +30,9 @@ function getScriptLijst() {
             cell1.innerHTML = scripts[i].naam;
             cell2.innerHTML = scripts[i].extension;
             for(var j in scripts[i].inputtypes){
-                cell3.innerHTML += scripts[i].inputtypes[j] + ', ';
+                if(scripts[i].inputtypes[j] != ""){
+                    cell3.innerHTML += scripts[i].inputtypes[j] + ', ';
+                }
             }
             for(var k in scripts[i].outputtypes){
                 cell4.innerHTML += scripts[i].outputtypes[k] + ', ';
@@ -68,6 +70,11 @@ function addToQueue(element){
     cell1.innerHTML = queueScripts[queueScripts.length-1].naam;
     for (var j in queueScripts[queueScripts.length-1].inputtypes){
         var select = document.createElement("select")
+        j++;
+        cell2.setAttribute("id", "InputTdScript"+queueScripts.length);
+        var idtekst = queueScripts.length +"_" +j;
+        j--;
+        select.setAttribute("id", idtekst  );
         cell2.appendChild(select);
         for (var outputVar in queueOutputVariables){
             var option = document.createElement('option');
@@ -107,7 +114,20 @@ function removeFromQueue() {
 
 function runQueue(){
     for (var script in queueScripts){
-
+        script++;
+        var tekstid = "InputTdScript" + script;
+        script--;
+        var td = document.getElementById(tekstid);
+        var children = td.children;
+        queueScripts[script].inputIndex  = [];
+        for(var m in children){
+            if(!isNaN(m)){
+                var select = children[m];
+                console.log(m);
+                queueScripts[script].inputIndex.push(select.value);
+                console.log( queueScripts[script]);
+            }
+        }
     }
     xhr.open("POST", "Controller?action=RunQueueScripts&type=assync", true);
     xhr.onreadystatechange = runQueueResult;

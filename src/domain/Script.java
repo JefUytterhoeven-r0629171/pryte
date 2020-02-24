@@ -9,10 +9,10 @@ public class Script {
 
     private String path , extension, naam /*output*/;
     private ArrayList inputtypes = new ArrayList<String>();
-    private  ArrayList outputlijst = new ArrayList<String>();
-    private  ArrayList inputlijst = new ArrayList<String>();
-    private ArrayList outputtypes = new ArrayList<String>();
-    private ArrayList inputIndex = new ArrayList<String>();
+    private  ArrayList<String> outputlijst = new ArrayList<String>();
+    private  ArrayList<String> inputlijst = new ArrayList<String>();
+    private ArrayList<String> outputtypes = new ArrayList<String>();
+    private ArrayList<String> inputIndex = new ArrayList<String>();
 
     public Script(String path, String extension, String naam) {
         this.path = path;
@@ -21,7 +21,7 @@ public class Script {
         id = count.incrementAndGet();
     }
 
-    public ArrayList getOutputlijst() {
+    public ArrayList<String> getOutputlijst() {
         return outputlijst;
     }
 
@@ -133,4 +133,11 @@ public class Script {
         inputlijst.add(nieuw);
     }
 
+    public ArrayList<String> getInputIndex() {
+        return inputIndex;
+    }
+
+    public void setInputIndex(ArrayList inputIndex) {
+        this.inputIndex = inputIndex;
+    }
 }

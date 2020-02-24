@@ -66,8 +66,28 @@ public class RunQueueScripts extends RequestHandler {
                 System.out.println("het zooveelste proces word geladen : " +i);
                 if(i >0){// enkel wanneer het het 2de script is kunnen er input waardes zijn. zou eens moeten testen zonder deze if
                     // zorg dat de output van het vorige script word doorgegeven aan de input van dit script. dit zal veranderen wanneer men zelf kan kiezen van waar naar waar we gaan
-                    scripts[i].setInputlijst(scripts[i-1].getOutputlijst());
+                    for (int j=0;j < scripts[i].getInputIndex().size(); j++){
+                        String inputindex = scripts[i].getInputIndex().get(j);
+                        System.out.println(inputindex);
+                        int scriptindex = Integer.parseInt(inputindex.substring(inputindex.length() -3,inputindex.length()-2));
+                        int varindex = Integer.parseInt(inputindex.substring(inputindex.length() -1,inputindex.length()));
+                        scriptindex--;
+                        varindex--;
+                        System.out.println("de scriptindex = " + scriptindex + "de varindex = " + varindex);
+                        scripts[i].addInput(scripts[scriptindex].getOutputlijst().get(varindex));
+                        System.out.println(scripts[scriptindex].getOutputlijst().get(varindex));
+                    }
                     System.out.println(scripts[i].getInputlijst());
+
+                   /*
+                    System.out.println(scripts[1].getInputIndex());
+                    String inputindex = scripts[i].getInputIndex().get(0);
+
+                    int scriptindex = Integer.parseInt(inputindex.substring(inputindex.length() -3,inputindex.length()-2));
+                    int varindex = Integer.parseInt(inputindex.substring(inputindex.length() -1,inputindex.length()));
+                    System.out.println(scriptindex +" " +varindex);
+                    scripts[1].addInput(scripts[0].getOutputlijst().get(0));
+                    */
                     //vul alle stdin's in.
                     this.writeAllInputVariables(processes.get(i), scripts[i]);
                 }
