@@ -10,7 +10,7 @@ import static javafx.scene.input.KeyCode.R;
 public class RunnerRscript implements RunScript {
 
     public Process runScript(String path, String argumenten){
-        /*
+        /* eerste versie van processen runnen. dit door de argmuneten in het path mee te geven. dit werkte maar had beperkingen.
         ProcessBuilder processBuilder = new ProcessBuilder();
         Process process = null;
         String output = "";
@@ -45,6 +45,8 @@ public class RunnerRscript implements RunScript {
         }
 
 */
+
+        //hier word een process aangemaakt voor een Rscript.
         ProcessBuilder processBuilder = new ProcessBuilder();
         Process process = null;
         String output ="";
@@ -52,15 +54,16 @@ public class RunnerRscript implements RunScript {
             // Run this on Windows, cmd, /c = terminate after this run
             if(argumenten == null){
                 processBuilder.command("Rscript", path );
-            }else{
+            }else{ // deze met argumenten word noormaal niet meer gebruikt. maar het doet niets verkeert dus blijft momenteel staan
                 processBuilder.command("Rscript", path, argumenten );
             }
 
             System.out.println("het proces word aangemaakt " + processBuilder.command());
+            // het process opstarten
             processBuilder.start();
             process = processBuilder.start();
 
-            /*
+            /* eerste versien van prints lezen. dit is vergealgemeent en verschoven naar RunQueScript
             // blocked :(
             BufferedReader nreader =
                     new BufferedReader(new InputStreamReader(process.getInputStream()));
@@ -76,7 +79,7 @@ public class RunnerRscript implements RunScript {
             e.printStackTrace();
         }
         System.out.println("het proces is gemaakt en word doorgegeven");
-
+        //geef het process terug naar RunQueueScripts
         return process;
     }
 }

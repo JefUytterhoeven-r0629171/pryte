@@ -11,7 +11,6 @@ public class RunPythonScript implements RunScript {
     public Process runScript(String path, String argumenten){
         ProcessBuilder processBuilder = new ProcessBuilder();
         Process process = null;
-        String output ="";
         try {
             // Run this on Windows, cmd, /c = terminate after this run
             if(argumenten == null){
@@ -20,7 +19,7 @@ public class RunPythonScript implements RunScript {
                 processBuilder.command("python", path, argumenten );
             }
 
-            System.out.println("het proces word aangemaakt");
+            //het proces word aangemaakt
             processBuilder.start();
             process = processBuilder.start();
 
@@ -39,7 +38,7 @@ public class RunPythonScript implements RunScript {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("het proces is gemaakt en word doorgegeven");
+        //het proces is gemaakt en word doorgegeven
         return process;
     }
 }

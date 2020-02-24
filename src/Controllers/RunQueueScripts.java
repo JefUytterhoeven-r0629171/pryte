@@ -18,11 +18,11 @@ public class RunQueueScripts extends RequestHandler {
 
     @Override
     public String handleRequest(HttpServletRequest request, HttpServletResponse response) {
+        // lijst maken om de scripts bij te houden en om de processen bij te houden. het is belangrijk dat de index van het script hetzelfde is als dit van zijn process
         Script[] scripts = null;
-        System.out.println("test");
         ArrayList<Process> processes = new ArrayList<Process>();
 
-        try {
+        try { // get het json object met scripts dat door de webpagina naar de server word gestuurt. hierien staan al de te runnen scripts.
             // 1. get received JSON data from request
             BufferedReader br =
                     new BufferedReader(new InputStreamReader(request.getInputStream()));
@@ -33,12 +33,17 @@ public class RunQueueScripts extends RequestHandler {
 
             }
 
-
+            // maak van deze json scripts echte scripts.
             scripts = new ObjectMapper().readValue(json, Script[].class);
-            System.out.println("hij is de que aan het laden");
+
             String output = null;
+            // runner is een interface om processen op te starten. en splitst op voor python en R
             RunScript runner;
             for (int i = 0 ; i < scripts.length ; i++){
+                // zorg dat de input en output's van deze scripts volledig leeg zijn. anders worden deze bijgehouden indien het script meerdere keren word gerunned.
+                scripts[i].resetinput();
+                scripts[i].resetoutput();
+                // start de processen op. apparte manier voor Rscript en voor python
                 switch (scripts[i].getExtension()){
                     case "py" :
                         System.out.println("er word een python script geladen");
@@ -56,16 +61,19 @@ public class RunQueueScripts extends RequestHandler {
             }
 
 
-
+            // de processen zijn opgestart nu gaan we voor elk process achter elkaar de outputs en inputs lezen.
             for (int i=0; i < processes.size();i++){
                 System.out.println("het zooveelste proces word geladen : " +i);
-                if(i >0){
+                if(i >0){// enkel wanneer het het 2de script is kunnen er input waardes zijn. zou eens moeten testen zonder deze if
+                    // zorg dat de output van het vorige script word doorgegeven aan de input van dit script. dit zal veranderen wanneer men zelf kan kiezen van waar naar waar we gaan
                     scripts[i].setInputlijst(scripts[i-1].getOutputlijst());
                     System.out.println(scripts[i].getInputlijst());
+                    //vul alle stdin's in.
                     this.writeAllInputVariables(processes.get(i), scripts[i]);
                 }
-
+                // read alles outputs van het script en slaag deze op.
                 this.readAllOutputVariabels(processes.get(i) , scripts[i]);
+                // sluit het script af nadat alles gebeurt is. dit om te zorgen dat er geen memory leaks zijn
                 processes.get(i).destroyForcibly();
             }
 
@@ -95,6 +103,8 @@ public class RunQueueScripts extends RequestHandler {
         }catch (IOException e) {
                 e.printStackTrace();
             }
+
+            // geef de bewerkte scripts terug naar de webpagina als een json.
         ObjectMapper mapper = new ObjectMapper();
 
         try {
@@ -111,21 +121,23 @@ public class RunQueueScripts extends RequestHandler {
         return "index.jsp";
     }
 
+    //functie om stdout's van scripts te lezen
     public void readAllOutputVariabels(Process process , Script script){
         System.out.println("read de variabelen van het programma");
         InputStream stdout = process.getInputStream();
         BufferedReader reader = new BufferedReader(new InputStreamReader(stdout));
         boolean tester = false;
         try {
-            String lastline;
-            while (tester == false){
-                lastline = reader.readLine();
+            String lastline  = reader.readLine();;
+            while (lastline != null){
+
                 System.out.println(lastline + process.isAlive());
                 if (lastline.equals("!!final var!!")){
                     tester = true;
                 }else {
                     script.addOutput(lastline);
                 }
+                lastline = reader.readLine();
             }
                 //lastline = reader.readLine();
 
@@ -134,7 +146,7 @@ public class RunQueueScripts extends RequestHandler {
         }
 
     }
-
+// functie om stdin's van script te schrijven
     public void writeAllInputVariables(Process process , Script script){
         System.out.println("write de variablen naar het programma");
         OutputStream stdin = process.getOutputStream();
