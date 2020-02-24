@@ -12,6 +12,7 @@ public class Script {
     private  ArrayList outputlijst = new ArrayList<String>();
     private  ArrayList inputlijst = new ArrayList<String>();
     private ArrayList outputtypes = new ArrayList<String>();
+    private ArrayList inputIndex = new ArrayList<String>();
 
     public Script(String path, String extension, String naam) {
         this.path = path;

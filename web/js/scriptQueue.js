@@ -65,7 +65,6 @@ function addToQueue(element){
     var cell2 = row.insertCell(1);
     var cell3 = row.insertCell(2);
 
-
     cell1.innerHTML = queueScripts[queueScripts.length-1].naam;
     for (var j in queueScripts[queueScripts.length-1].inputtypes){
         var select = document.createElement("select")
@@ -107,6 +106,9 @@ function removeFromQueue() {
 }
 
 function runQueue(){
+    for (var script in queueScripts){
+
+    }
     xhr.open("POST", "Controller?action=RunQueueScripts&type=assync", true);
     xhr.onreadystatechange = runQueueResult;
     xhr.send(JSON.stringify(queueScripts));
