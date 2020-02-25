@@ -1,7 +1,6 @@
 var xhr = new XMLHttpRequest();
 var scripts;
 var queueScripts = new Array();
-var variableCounter = 1;
 var outputVariableCounter = 1;
 var queueOutputVariables = new Array();
 var queueScriptCounter = 1;
@@ -104,7 +103,7 @@ function addToQueue(element){
 
 function removeFromQueue() {
     var queueTable = document.getElementById('queueTable');
-    if (queueTable.rows.length == 0) {
+    if (queueTable.rows.length != 0) {
         queueScriptCounter--;
     }
     queueTable.removeChild(queueTable.lastChild);
