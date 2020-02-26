@@ -148,7 +148,8 @@ public class RunQueueScripts extends RequestHandler {
         BufferedReader reader = new BufferedReader(new InputStreamReader(stdout));
         boolean tester = false;
         try {
-            String lastline  = reader.readLine();;
+            String lastline  = reader.readLine();
+            System.out.println(lastline + process.isAlive());
             while (lastline != null){
 
                 System.out.println(lastline + process.isAlive());

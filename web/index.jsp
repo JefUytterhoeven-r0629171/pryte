@@ -74,6 +74,8 @@
     </div>
     <div class="split right">
       <h3>Overview</h3>
+      <img src="data:image/gif;base64,xxxxxxxxxxxxx...">
+
       <table class="table">
         <thead>
           <tr>

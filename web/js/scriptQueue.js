@@ -144,7 +144,14 @@ function runQueueResult() {
             var li = document.createElement("li");
             li.appendChild(document.createTextNode(queueScripts[i].naam));
             for (var j in queueScripts[i].outputlijst){
-                li.appendChild(document.createTextNode(queueScripts[i].outputlijst[j]));
+                console.log(queueScripts[i].outputtypes[j]);
+                if(queueScripts[i].outputtypes[j] == "png"){
+                    var img = document.createElement("img")
+                    img.setAttribute("src", "data:image/png;base64,"+ queueScripts[i].outputlijst[j])
+                    li.appendChild(img)
+                }else {
+                    li.appendChild(document.createTextNode(queueScripts[i].outputlijst[j]));
+                }
             }
             li.setAttribute("id", queueScripts[queueScripts.length -1].id+"_id"); // added line
             list.appendChild(li);
