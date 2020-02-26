@@ -1,7 +1,13 @@
 h3 {
     padding: 15px 0 15px 0;
 }
+ol li {
+    margin-top: 20px;
+}
 
+ul li {
+    margin-top: 0px;
+}
 
 /* Split the screen in half */
 .split {
