@@ -69,12 +69,18 @@ function addToQueue(element){
 
     cell1.innerHTML = queueScripts[queueScripts.length-1].naam;
     for (var j in queueScripts[queueScripts.length-1].inputtypes){
-        var select = document.createElement("select")
+        var label = document.createElement("label");
+        var select = document.createElement("select");
+        var idtekst = queueScripts.length +"_" +j;
+        label.setAttribute("for", idtekst);
+        select.setAttribute("class", "form-control form-control-sm")
+        label.innerHTML = queueScripts[queueScripts.length-1].inputtypes[j];
         j++;
         cell2.setAttribute("id", "InputTdScript"+queueScripts.length);
-        var idtekst = queueScripts.length +"_" +j;
+
         j--;
         select.setAttribute("id", idtekst  );
+        cell2.appendChild(label);
         cell2.appendChild(select);
         for (var outputVar in queueOutputVariables){
             var option = document.createElement('option');
@@ -99,13 +105,10 @@ function addToQueue(element){
 
 function removeFromQueue() {
     var queueTable = document.getElementById('queueTable');
-    if (queueTable.rows.length == 1) {
-        variableCounter = 0;
-        outputVariableCounter = 0;
+    if (queueTable.rows.length != 0) {
+        queueScriptCounter--;
     }
     queueTable.removeChild(queueTable.lastChild);
-    outputVariableCounter--;
-    queueScriptCounter--;
     queueScripts.pop();
     for(var i = 0; i < totalOutputslastQueuescript; i++) {
         queueOutputVariables.pop();
@@ -117,8 +120,7 @@ function runQueue(){
         script++;
         var tekstid = "InputTdScript" + script;
         script--;
-        var td = document.getElementById(tekstid);
-        var children = td.children;
+        var children = document.getElementById(tekstid).getElementsByTagName('select');
         queueScripts[script].inputIndex  = [];
         for(var m in children){
             if(!isNaN(m)){
@@ -144,6 +146,7 @@ function runQueueResult() {
             var li = document.createElement("li");
             li.appendChild(document.createTextNode(queueScripts[i].naam));
             for (var j in queueScripts[i].outputlijst){
+                li.appendChild(document.createTextNode(" - "));
                 li.appendChild(document.createTextNode(queueScripts[i].outputlijst[j]));
             }
             li.setAttribute("id", queueScripts[queueScripts.length -1].id+"_id"); // added line
