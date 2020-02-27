@@ -79,10 +79,10 @@ public class GetScripts extends RequestHandler {
         ObjectMapper mapper = new ObjectMapper();
 
         try {
-            String personenJSON = mapper.writeValueAsString(scripts);
-            System.out.println(personenJSON);
+            String scriptsJSON = mapper.writeValueAsString(scripts);
+            System.out.println(scriptsJSON);
             response.setContentType("application/json");
-            response.getWriter().write(personenJSON);
+            response.getWriter().write(scriptsJSON);
         } catch (JsonProcessingException e) {
 
         } catch (IOException e) {
