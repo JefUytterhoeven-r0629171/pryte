@@ -30,7 +30,6 @@ public class RunQueueScripts extends RequestHandler {
             String json = "";
             if (br != null) {
                 json = br.readLine();
-
             }
 
             // maak van deze json scripts echte scripts.

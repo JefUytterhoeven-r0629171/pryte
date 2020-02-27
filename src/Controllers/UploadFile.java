@@ -53,16 +53,17 @@ public class UploadFile extends RequestHandler {
                 addScriptToList(request, file);
 
                 //createconffile
-                String inputformname = "input2";
-                int index = 3;
+                String inputformname = "input1";
+                int index = 2;
                 while (request.getParameter(inputformname)!=null){
+                    System.out.println(inputformname);
                     invartypes.add(request.getParameter(inputformname));
                     inputformname = "input" + index;
                     index++;
 
                 }
-                String outputformname = "output2";
-                index = 3;
+                String outputformname = "output1";
+                index = 2;
                 while (request.getParameter(outputformname)!=null){
                     outvartypes.add(request.getParameter(outputformname));
                     outputformname = "output" + index;
