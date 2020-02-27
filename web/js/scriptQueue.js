@@ -69,19 +69,31 @@ function addToQueue(element){
 
     cell1.innerHTML = queueScripts[queueScripts.length-1].naam;
     for (var j in queueScripts[queueScripts.length-1].inputtypes){
-        var select = document.createElement("select")
+        var label = document.createElement("label");
+        var select = document.createElement("select");
+        var idtekst = queueScripts.length +"_" +j;
+        label.setAttribute("for", idtekst);
+        select.setAttribute("class", "form-control form-control-sm");
+        label.innerHTML = queueScripts[queueScripts.length-1].inputtypes[j];
         j++;
         cell2.setAttribute("id", "InputTdScript"+queueScripts.length);
-        var idtekst = queueScripts.length +"_" +j;
+
         j--;
         select.setAttribute("id", idtekst  );
-        cell2.appendChild(select);
-        for (var outputVar in queueOutputVariables){
-            var option = document.createElement('option');
-            option.setAttribute("value",  queueOutputVariables[outputVar]);
-            option.innerHTML = queueOutputVariables[outputVar];
-            select.appendChild(option);
+
+
+            for (var outputVar in queueOutputVariables){
+                var option = document.createElement('option');
+                option.setAttribute("value",  queueOutputVariables[outputVar]);
+                option.innerHTML = queueOutputVariables[outputVar];
+                select.appendChild(option);
+            }
+        if(select.options.length != 0) {
+            cell2.appendChild(label);
+            cell2.appendChild(select);
         }
+
+
     }
     totalOutputslastQueuescript = queueScripts[queueScripts.length-1].outputtypes.length;
     for (var k in queueScripts[queueScripts.length-1].outputtypes){
@@ -99,13 +111,10 @@ function addToQueue(element){
 
 function removeFromQueue() {
     var queueTable = document.getElementById('queueTable');
-    if (queueTable.rows.length == 1) {
-        variableCounter = 0;
-        outputVariableCounter = 0;
+    if (queueTable.rows.length != 0) {
+        queueScriptCounter--;
     }
     queueTable.removeChild(queueTable.lastChild);
-    outputVariableCounter--;
-    queueScriptCounter--;
     queueScripts.pop();
     for(var i = 0; i < totalOutputslastQueuescript; i++) {
         queueOutputVariables.pop();
@@ -117,8 +126,7 @@ function runQueue(){
         script++;
         var tekstid = "InputTdScript" + script;
         script--;
-        var td = document.getElementById(tekstid);
-        var children = td.children;
+        var children = document.getElementById(tekstid).getElementsByTagName('select');
         queueScripts[script].inputIndex  = [];
         for(var m in children){
             if(!isNaN(m)){
@@ -142,21 +150,28 @@ function runQueueResult() {
         list.innerHTML = "";
         for(var i in queueScripts){
             var li = document.createElement("li");
-            li.appendChild(document.createTextNode(queueScripts[i].naam));
+            var h5 = document.createElement("h5");
+            var ulist = document.createElement('ul');
+            ulist.setAttribute("class","list-group list-group-flush");
+            h5.appendChild(document.createTextNode(queueScripts[i].naam));
+            li.appendChild(h5);
+
             for (var j in queueScripts[i].outputlijst){
-                console.log(queueScripts[i].outputtypes[j]);
+                var ulist_li = document.createElement('li');
                 if(queueScripts[i].outputtypes[j] == "png"){
-                    var img = document.createElement("img")
-                    img.setAttribute("src", "data:image/png;base64,"+ queueScripts[i].outputlijst[j])
-                    li.appendChild(img)
-                }else {
-                    li.appendChild(document.createTextNode(queueScripts[i].outputlijst[j]));
+                    var img = document.createElement("img");
+                    img.setAttribute("src","data:image/png;base64,"+queueScripts[i].outputlijst[j])
+                    ulist_li.appendChild(img);
+                } else {
+                    ulist_li.appendChild(document.createTextNode(queueScripts[i].outputlijst[j]));
                 }
+                ulist_li.setAttribute("class","list-group-item");
+                ulist.appendChild(ulist_li);
             }
-            li.setAttribute("id", queueScripts[queueScripts.length -1].id+"_id"); // added line
+            li.setAttribute("id", queueScripts[queueScripts.length -1].id+"_id");// added line
+            li.appendChild(ulist);
             list.appendChild(li);
         }
-
     }
 }
 
