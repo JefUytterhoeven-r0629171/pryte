@@ -38,17 +38,24 @@ function getScriptLijst() {
                 cell4.innerHTML += scripts[i].outputtypes[k] + ', ';
             }
             cell5.innerHTML += '<button type="button" onclick="addToQueue( \'' + scripts[i].id + '\')">Add to queue</button>'
-            cell6.innerHTML += '<button type="button" onclick="deleteScript()"> X </button>'
+            cell6.innerHTML += '<button type="button" onclick="deleteScript(\'' + i +'\')"> X </button>'
 
         }
     }
 }
 
-function deleteScript(){
-    xhr.open("GET", "Controller?action=DeleteScript&type=assync", true);
-    xhr.onreadystatechange = getScriptLijst;
+
+
+function deleteScript(i){
+    xhr.open("GET", "Controller?action=DeleteScript&type=assync&naam="+scripts[i].naam, true);
+    xhr.onreadystatechange = function(){
+        console.log(scripts[i].id);
+        console.log(i);
+        document.getElementById(scripts[i].id).remove();
+    };
     xhr.send(null);
 }
+
 
 function addToQueue(element){
     //document.getElementById(element).style.border = "3px solid green";
@@ -146,6 +153,8 @@ function runQueueResult() {
     if (xhr.status == 200 && xhr.readyState == 4) {
         qscripts = JSON.parse(xhr.responseText);
         queueScripts = qscripts;
+        var title = document.getElementById("outputTitle");
+        title.style.display = "block";
         var list = document.getElementById("outputList");
         list.innerHTML = "";
         for(var i in queueScripts){

@@ -49,7 +49,7 @@
         <input class="btn-outline-secondary" type="submit" name="Submit" value="voeg toe" />
       </form>
       </div>
-      <div id="queue" style="display: none;" >
+      <div id="queue" style="display: none;text-align: right;" >
         <h3>Queue</h3>
         <table class="table">
           <thead>
@@ -66,7 +66,7 @@
         <button class="btn btn-outline-success" type="button" onclick="runQueue()">Run queue</button>
         <button class="btn btn-outline-danger" type="button" onclick="removeFromQueue()">Remove last item</button>
         <br>
-        <h3>Output</h3>
+        <h3 id="outputTitle" style="display: none;">Output</h3>
         <ol id="outputList" type="1">
 
         </ol>
@@ -74,7 +74,6 @@
     </div>
     <div class="split right">
       <h3>Overview</h3>
-      <img src="data:image/gif;base64,xxxxxxxxxxxxx...">
 
       <table class="table">
         <thead>
