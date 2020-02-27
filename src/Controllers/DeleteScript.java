@@ -18,7 +18,6 @@ public class DeleteScript extends RequestHandler{
         String FILE_TO = FileSystemView.getFileSystemView().getDefaultDirectory().getPath() +"\\pryteapp\\uploadedfiles";
 
         FILE_TO = FILE_TO + "\\" + naam;
-        System.out.println(FILE_TO);
         File file = new File(FILE_TO);
         file.delete();
 

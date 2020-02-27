@@ -153,6 +153,8 @@ function runQueueResult() {
     if (xhr.status == 200 && xhr.readyState == 4) {
         qscripts = JSON.parse(xhr.responseText);
         queueScripts = qscripts;
+        var title = document.getElementById("outputTitle");
+        title.style.display = "block";
         var list = document.getElementById("outputList");
         list.innerHTML = "";
         for(var i in queueScripts){
