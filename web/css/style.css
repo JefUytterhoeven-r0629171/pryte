@@ -9,6 +9,10 @@ ul li {
     margin-top: 0px;
 }
 
+img {
+    max-width: 100%;
+}
+
 /* Split the screen in half */
 .split {
     height: 100%;
