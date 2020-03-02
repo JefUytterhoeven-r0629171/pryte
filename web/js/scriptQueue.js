@@ -166,6 +166,7 @@ function runQueueResult() {
             li.appendChild(h5);
 
             for (var j in queueScripts[i].outputlijst){
+
                 var ulist_li = document.createElement('li');
                 if(queueScripts[i].outputtypes[j] == "png"){
                     var img = document.createElement("img");
@@ -176,6 +177,7 @@ function runQueueResult() {
                 }
                 ulist_li.setAttribute("class","list-group-item");
                 ulist.appendChild(ulist_li);
+
             }
             li.setAttribute("id", queueScripts[queueScripts.length -1].id+"_id");// added line
             li.appendChild(ulist);

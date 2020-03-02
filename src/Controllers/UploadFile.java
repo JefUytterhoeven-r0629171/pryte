@@ -56,6 +56,7 @@ public class UploadFile extends RequestHandler {
                 String inputformname = "input1";
                 int index = 2;
                 while (request.getParameter(inputformname)!=null){
+                    System.out.println(inputformname);
                     invartypes.add(request.getParameter(inputformname));
                     inputformname = "input" + index;
                     index++;
