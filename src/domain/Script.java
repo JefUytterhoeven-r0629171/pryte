@@ -13,6 +13,9 @@ public class Script {
     private  ArrayList<String> inputlijst = new ArrayList<String>();
     private ArrayList<String> outputtypes = new ArrayList<String>();
     private ArrayList<String> inputIndex = new ArrayList<String>();
+    private int lastreadoutput = 0;
+    private int lastreadinput = 0;
+
 
     public Script(String path, String extension, String naam) {
         this.path = path;
@@ -123,9 +126,11 @@ public class Script {
     }
 
     public void resetoutput() {
+        lastreadoutput = 0;
         outputlijst = new ArrayList<String>();
     }
     public void resetinput() {
+        lastreadinput = 0;
         inputlijst = new ArrayList<String>();
     }
 
@@ -139,5 +144,27 @@ public class Script {
 
     public void setInputIndex(ArrayList inputIndex) {
         this.inputIndex = inputIndex;
+    }
+
+    public int getLastreadoutput() {
+        return lastreadoutput;
+    }
+
+    public void setLastreadoutput(int lastreadoutput) {
+        this.lastreadoutput = lastreadoutput;
+    }
+    public void incrementLastReadOutpu(){
+        lastreadoutput++;
+    }
+
+    public int getLastreadinput() {
+        return lastreadinput;
+    }
+
+    public void setLastreadinput(int lastreadinput) {
+        this.lastreadinput = lastreadinput;
+    }
+    public void incrementLastReadinput(){
+        lastreadinput++;
     }
 }

@@ -2,17 +2,20 @@ package Controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
 import domain.RunPythonScript;
 
 import domain.RunScript;
 import domain.RunnerRscript;
 import domain.Script;
 import org.omg.Messaging.SYNC_WITH_TRANSPORT;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 
 public class RunQueueScripts extends RequestHandler {
 
@@ -20,7 +23,13 @@ public class RunQueueScripts extends RequestHandler {
     public String handleRequest(HttpServletRequest request, HttpServletResponse response) {
         // lijst maken om de scripts bij te houden en om de processen bij te houden. het is belangrijk dat de index van het script hetzelfde is als dit van zijn process
         Script[] scripts = null;
+        boolean procesopen;
         ArrayList<Process> processes = new ArrayList<Process>();
+        ArrayList<InputStream> inputStreams = new ArrayList<InputStream>();
+        ArrayList<BufferedReader> readers = new ArrayList<>();
+        ArrayList<OutputStream> outputStreams = new ArrayList<>();
+        ArrayList<BufferedWriter> writers = new ArrayList<>();
+        Multimap<String, String> inoutmap = ArrayListMultimap.create();
 
         try { // get het json object met scripts dat door de webpagina naar de server word gestuurt. hierien staan al de te runnen scripts.
             // 1. get received JSON data from request
@@ -38,6 +47,7 @@ public class RunQueueScripts extends RequestHandler {
             String output = null;
             // runner is een interface om processen op te starten. en splitst op voor python en R
             RunScript runner;
+            Process process = null;
             for (int i = 0 ; i < scripts.length ; i++){
                 // zorg dat de input en output's van deze scripts volledig leeg zijn. anders worden deze bijgehouden indien het script meerdere keren word gerunned.
                 scripts[i].resetinput();
@@ -47,19 +57,126 @@ public class RunQueueScripts extends RequestHandler {
                     case "py" :
                         System.out.println("er word een python script geladen");
                         runner = new RunPythonScript();
-                        processes.add(runner.runScript(scripts[i].getPath(), output));
+                        process = runner.runScript(scripts[i].getPath(), output);
+                        processes.add(process);
                         //scripts[i].setOutputlijstString(output);
                         break;
                     case "R":
                         System.out.println("er word een R script geladen");
                         runner = new RunnerRscript();
-                        processes.add(runner.runScript(scripts[i].getPath(), output));
-                       // scripts[i].setOutputlijstString(output);
+                        process = runner.runScript(scripts[i].getPath(), output);
+                        processes.add(process);
                         break;
+                }
+                if(process != null){
+                    System.out.println("aanmaken van re readers en writers");
+                    InputStream stdout = process.getInputStream();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(stdout));
+                    inputStreams.add(stdout);
+                    readers.add(reader);
+                    OutputStream stdin = process.getOutputStream();
+                    outputStreams.add(stdin);
+                    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(stdin));
+                    writers.add(writer);
+                }
+
+
+            }
+            // configure inoutmap for quick acces to the needed inputs.
+            System.out.println("configureren van de inoutmap");
+            for (int i =0; i < scripts.length;i++){
+                System.out.println("inoutmap config voor elk scipt");
+                for(int j = 0; j < scripts[i].getInputIndex().size();j++){
+                    String inputindex = scripts[i].getInputIndex().get(j);
+                    int scriptindex = Integer.parseInt(inputindex.substring(inputindex.length() -3,inputindex.length()-2));
+                    int varindex = Integer.parseInt(inputindex.substring(inputindex.length() -1,inputindex.length()));
+                    String outputindex = Integer.toString(scriptindex -1) +'_' +Integer.toString(varindex -1);
+                    inputindex = Integer.toString(i) + "_" + Integer.toString(j);
+                    inoutmap.put(outputindex , inputindex);
+                    System.out.println("schow inoutmap " + inoutmap);
                 }
             }
 
+            //zolang er processen open zijn blijven we gaan.
+            while (checkProcesOpen(processes)){
+                System.out.println("loopen zolang alle processen niet gesloten zijn" + processes.size());
+                for (int i=0;i< processes.size();i++){
+                    System.out.println("i = " + i);
 
+                    //test of het script nog niet geschreven inputs heeft.
+
+                    while (scripts[i].getInputlijst().size() > scripts[i].getLastreadinput()){
+                        System.out.println("2");
+
+                        writers.get(i).write(scripts[i].getInputlijst().get(scripts[i].getLastreadinput()));
+                        writers.get(i).flush();
+                        if(scripts[i].getInputlijst().size() == scripts[i].getLastreadinput() +1){
+                            writers.get(i).close();
+                        }
+
+                        scripts[i].incrementLastReadinput();
+                    }
+
+
+                    //check if there are new inputs to read. keep reading untile there aren't
+                    String lastline = readers.get(i).readLine();
+                    System.out.println(lastline);
+                    while (lastline != null){
+                        if (lastline.equals("!!final var!!")){
+                            // de laatste variabele is bereikt en het proces word gesloten.
+                            processes.get(i).destroy();
+                            writers.get(i).close();
+                            readers.get(i).close();
+                            System.out.println("het proces" + i +"word gelsoten (gelsoten if false) = " +processes.get(i).isAlive());
+                            lastline = null;
+                        }else {
+                            scripts[i].addOutput(lastline);
+                            System.out.println("de laatst gelezen lijn van het " +i+ "script is " + lastline);
+                            lastline = readers.get(i).readLine();
+                        }
+                        System.out.println("lastline = " + lastline);
+                    }
+                    System.out.println("de outputs voor dit scipt zijn momenteel gelezen");
+                    // alle ingeleze variabelen moeten nu naar de juiste scripts gestuurt worden
+                    while (scripts[i].getLastreadoutput() <scripts[i].getOutputlijst().size()){
+                        System.out.println("start redirecting outputputs to inputs getLastreadoutput=" + scripts[i].getLastreadoutput() + " outputlijstsize " + scripts[i].getOutputlijst().size());
+                        String mapkey = Integer.toString(i) + "_" + Integer.toString(scripts[i].getLastreadoutput());
+                        Collection<String> inputs = inoutmap.get(mapkey);
+                        System.out.println(mapkey);
+                        System.out.println(inputs);
+                        Iterator<String> m = inputs.iterator();
+                        //System.out.println(m.next());
+                        while(m.hasNext()){
+
+                            String[] target = m.next().split("_");
+                            System.out.println(target[0] +" , " +target[1]);
+                            ArrayList<String> inlijst = scripts[Integer.parseInt(target[0])].getInputlijst();
+
+                            if(inlijst.size() < Integer.parseInt(target[1])){
+                                while (inlijst.size() < Integer.parseInt(target[1])){
+                                    System.out.println("1.2");
+                                    inlijst.add(null);
+                                }
+                            }
+                            inlijst.add(Integer.parseInt(target[1]), scripts[i].getOutputlijst().get(scripts[i].getLastreadoutput()));
+                            scripts[Integer.parseInt(target[0])].setInputlijst(inlijst);
+                        }
+                        scripts[i].incrementLastReadOutpu();
+                    }
+
+
+                    System.out.println(scripts[i].getInputlijst());
+
+
+
+                    System.out.println("dit script is voorlopig gedaan index = " + i);
+
+                }
+            }
+
+            System.out.println("alle processen zijn gelsoten");
+
+/*
             // de processen zijn opgestart nu gaan we voor elk process achter elkaar de outputs en inputs lezen.
             for (int i=0; i < processes.size();i++){
                 System.out.println("het zooveelste proces word geladen : " +i);
@@ -86,7 +203,7 @@ public class RunQueueScripts extends RequestHandler {
                     int varindex = Integer.parseInt(inputindex.substring(inputindex.length() -1,inputindex.length()));
                     System.out.println(scriptindex +" " +varindex);
                     scripts[1].addInput(scripts[0].getOutputlijst().get(0));
-                    */
+
                     //vul alle stdin's in.
                     this.writeAllInputVariables(processes.get(i), scripts[i]);
                 }
@@ -95,7 +212,7 @@ public class RunQueueScripts extends RequestHandler {
                 // sluit het script af nadat alles gebeurt is. dit om te zorgen dat er geen memory leaks zijn
                 processes.get(i).destroyForcibly();
             }
-
+*/
 
          //hardcoded versien van stdin stdout voor 1 variabele door te geven van stdout naar stdin
 /*
@@ -117,13 +234,13 @@ public class RunQueueScripts extends RequestHandler {
             lastline = reader2.readLine();
             System.out.println("please be turned" + lastline);
 */
-
+        System.out.println("just a test");
 
         }catch (IOException e) {
                 e.printStackTrace();
-            }
+        }
 
-            // geef de bewerkte scripts terug naar de webpagina als een json.
+        // geef de bewerkte scripts terug naar de webpagina als een json.
         ObjectMapper mapper = new ObjectMapper();
 
         try {
@@ -131,13 +248,23 @@ public class RunQueueScripts extends RequestHandler {
             response.setContentType("application/json");
             response.getWriter().write(personenJSON);
         } catch (JsonProcessingException e) {
-
+            e.printStackTrace();
         } catch (IOException e) {
             e.getMessage();
         }
 
 
         return "index.jsp";
+    }
+
+    private boolean checkProcesOpen(ArrayList<Process> processes) {
+        boolean open = false;
+        for (int i=0 ; i< processes.size();i++){
+            if(processes.get(i).isAlive()){
+                open = true;
+            }
+        }
+        return open;
     }
 
     //functie om stdout's van scripts te lezen
