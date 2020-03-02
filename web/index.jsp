@@ -49,14 +49,14 @@
         <input class="btn-outline-secondary" type="submit" name="Submit" value="voeg toe" />
       </form>
       </div>
-      <div id="queue" style="display: none;text-align: right;" >
-        <h3>Queue</h3>
+      <div id="queue" style="display: none;" >
+        <h3 style="text-align: right;">Queue</h3>
         <table class="table">
           <thead>
             <tr>
               <th>Naam</th>
-              <th>Input</th>
-              <th>Output</th>
+              <th>Input types</th>
+              <th>Output types</th>
             </tr>
           </thead>
           <tbody id="queueTable">

@@ -95,7 +95,7 @@ function addToQueue(element){
                 option.innerHTML = queueOutputVariables[outputVar];
                 select.appendChild(option);
             }
-        if(select.options.length != 0) {
+        if(queueScripts[queueScripts.length-1].inputtypes[j].length != 0) {
             cell2.appendChild(label);
             cell2.appendChild(select);
         }
